@@ -24,7 +24,7 @@ const AdminSidebar = ({ logout }) => {
             <i className='fa fa-align-justify pt-2 mr-2 h6' style={{color: '#A78BE2'}}></i>
           </div>
         </div>
-        <div className='row mx-3 h5'>
+        <div className='row mx-3 pt-4 h5'>
           Menu
         </div>
         <div className='row mx-3 h5 menuItem' onClick={() => goPage('')}>
