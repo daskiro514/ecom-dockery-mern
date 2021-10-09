@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import Admin from '../admin/Admin'
 import Customer from '../customer/Customer'
 
@@ -12,6 +13,8 @@ const Dashboard = ({ isAuthenticated, user }) => {
     return (
       <Customer />
     )
+  } else if (isAuthenticated !== true) {
+    return <Redirect to={'/'} />
   } else {
     return null
   }
