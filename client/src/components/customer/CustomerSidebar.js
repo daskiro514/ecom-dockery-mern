@@ -13,7 +13,7 @@ const CustomerSidebar = ({ logout }) => {
   }
 
   return (
-    <div className='col-md-2 p-2 sidebar'>
+    <div className='col-lg-2 p-2 sidebar'>
       <div className='container-fluid'>
         <div className='row mx-3' onClick={() => goPage('')}>
           Dashboard

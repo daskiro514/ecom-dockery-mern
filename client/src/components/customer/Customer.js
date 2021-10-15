@@ -12,7 +12,7 @@ const Customer = () => {
     <div className='container-fluid bg-Customer'>
       <div className='row'>
         <CustomerSidebar />
-        <div className='col-md-10'>
+        <div className='col-lg-10'>
           <Router basename="/dashboard">
             <PrivateRoute exact path="/" component={CustomerDashboard} />
             <PrivateRoute exact path="/settings" component={CustomerSettings} />

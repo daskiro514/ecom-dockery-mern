@@ -1,34 +1,34 @@
-import React from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+import React from 'react'
+import { Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+import { login } from '../../actions/auth'
 
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = React.useState({
-    username: '',
+    email: '',
     password: ''
   })
 
-  const { username, password } = formData
+  const { email, password } = formData
 
   const onChange = e =>
     setFormData({ ...formData, [e.target.name]: e.target.value })
 
   const onSubmit = e => {
     e.preventDefault()
-    login(username, password)
+    login(email, password)
   }
 
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/dashboard' />
   }
 
   return (
     <div className='container-fluid bg-admin'>
       <div className='row'>
-        <div className='col-md-3'></div>
-        <div className='col-md-6'>
+        <div className='col-lg-3'></div>
+        <div className='col-lg-6'>
           <div className='row'>
             <div className='col-1'></div>
             <div className='col-10'>
@@ -37,14 +37,14 @@ const Login = ({ login, isAuthenticated }) => {
                 <div className='col p-5'>
                   <div className='h3 text-center' style={{ color: '#B098E6' }}>Log in</div>
                   <form className='form' onSubmit={onSubmit}>
-                    <div>Username</div>
+                    <div>email</div>
                     <div className='form-group'>
                       <input
-                        type='text'
-                        placeholder='Username'
-                        name='username'
+                        type='email'
+                        placeholder='email'
+                        name='email'
                         className='form-control'
-                        value={username}
+                        value={email}
                         onChange={onChange}
                         required
                       />
@@ -76,19 +76,19 @@ const Login = ({ login, isAuthenticated }) => {
             <div className='col-1'></div>
           </div>
         </div>
-        <div className='col-md-3'></div>
+        <div className='col-lg-3'></div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
-};
+}
 
 const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
-});
+})
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { login })(Login)

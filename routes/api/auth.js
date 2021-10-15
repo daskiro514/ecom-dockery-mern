@@ -1,25 +1,25 @@
-const express = require('express');
-const router = express.Router();
-const bcrypt = require('bcryptjs');
-const auth = require('../../middleware/auth');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const express = require('express')
+const router = express.Router()
+const bcrypt = require('bcryptjs')
+const auth = require('../../middleware/auth')
+const jwt = require('jsonwebtoken')
+const config = require('config')
+const { check, validationResult } = require('express-validator')
 
-const User = require('../../models/User');
+const User = require('../../models/User')
 
 // @route    GET api/auth
 // @desc     Get user by token
 // @access   Private
 router.get('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
-    res.json(user);
+    const user = await User.findById(req.user.id).select('-password')
+    res.json(user)
   } catch (err) {
-    console.error(err.message);
-    res.status(500).send('Server Error');
+    console.error(err.message)
+    res.status(500).send('Server Error')
   }
-});
+})
 
 // @route    POST api/auth
 // @desc     Authenticate user & get token
@@ -33,10 +33,10 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
 
-    const { username, password } = req.body
+    const { email, password } = req.body
 
     try {
-      let user = await User.findOne({ username: new RegExp(`^${username}$`, 'i')})
+      let user = await User.findOne({ email: new RegExp(`^${email}$`, 'i')})
 
       if (!user) {
         return res
@@ -74,4 +74,4 @@ router.post(
   }
 )
 
-module.exports = router;
+module.exports = router
