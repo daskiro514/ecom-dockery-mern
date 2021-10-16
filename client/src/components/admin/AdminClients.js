@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { getAdminClients, goPage } from '../../actions/admin'
 import { useHistory } from 'react-router'
 import { formatDate } from '../../utils/formatDate1'
+import { documenetsPendingCheck } from '../../utils/clientDocuments'
 
 const AdminClients = ({ getAdminClients, clients, goPage }) => {
   const history = useHistory()
@@ -43,13 +44,13 @@ const AdminClients = ({ getAdminClients, clients, goPage }) => {
               </thead>
               <tbody>
                 {clients.map((item, index) =>
-                  <tr key={index}>
+                  <tr key={index} onClick={() => goPage(history, `client/${item._id}`)}>
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
                     <td>{formatDate(item.dateOfBirth)}</td>
                     <td>{item.email}</td>
                     <td>{item.phoneNumber}</td>
-                    <td><span className={'badge ' + (item.status === 'Approved' ? 'badge-info' : 'badge-pending')}>{item.status}</span></td>
+                    <td><span className={'badge ' + (documenetsPendingCheck(item) === 'All Documents Approved' ? 'badge-info' : 'badge-pending')}>{documenetsPendingCheck(item)}</span></td>
                   </tr>
                 )}
               </tbody>

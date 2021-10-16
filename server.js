@@ -10,6 +10,9 @@ connectDB()
 // Init Middleware
 app.use(express.json())
 
+// ACCESS FILES
+app.use('/files/', express.static('files'))
+
 // Define Routes
 app.use('/api/users', require('./routes/api/users'))
 app.use('/api/auth', require('./routes/api/auth'))

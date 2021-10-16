@@ -10,7 +10,7 @@ const Dashboard = ({ isAuthenticated, user, logout }) => {
     return (
       <Admin />
     )
-  } else if (isAuthenticated && user && user.type === "customer") {
+  } else if (isAuthenticated && user && user.type === "client") {
     return (
       <Customer />
     )

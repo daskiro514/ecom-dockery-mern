@@ -13,24 +13,7 @@ const User = require('../../models/User')
 const fileUpload = require('../../utils/fileUpload')
 
 router.get('/getAdminClients', async (req, res) => {
-  const clientsFromDB = await User.find({ type: 'client' })
-
-  var clients = []
-  clientsFromDB.forEach(clientFromDB => {
-    var client = { ...clientFromDB._doc }
-    if (client.einVerificationLetterStatus === 'Pending' ||
-      client.articlesOfOrganizationStatus === 'Pending' ||
-      client.w9Status === 'Pending' ||
-      client.bankCardStatus === 'Pending' ||
-      client.usDriversLicenseStatus === 'Pending' ||
-      client.creditDebitCardFrontStatus === 'Pending' ||
-      client.creditDebitCardBackStatus === 'Pending') {
-      client.status = 'Documents Pending'
-    } else {
-      client.status = 'Approved'
-    }
-    clients.push(client)
-  })
+  const clients = await User.find({ type: 'client' })
 
   res.json({
     success: true,
@@ -85,5 +68,24 @@ router.post('/addNewClient',
     })
   }
 )
+
+router.get('/getClient/:id', async (req, res) => {
+  const client = await User.findById(req.params.id)
+
+  res.json({
+    success: true,
+    client
+  })
+})
+
+router.post('/updateClientDocumentStatus', async (req, res) => {
+  await User.findByIdAndUpdate(req.body.clientID, {
+    [req.body.keyInDB + 'Status']: req.body.updateType === 'Approve' ? 'Approved' : req.body.updateType === 'Deny' ? 'Denied' : 'Pending' 
+  })
+
+  res.json({
+    success: true
+  })
+})
 
 module.exports = router
