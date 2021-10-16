@@ -20,7 +20,7 @@ const Dashboard = ({ isAuthenticated, user, logout }) => {
     return (
       <div>
         <h5>It will be redirected soon.</h5>
-        <button className='btn btn-danger'>Logout</button>
+        <button className='btn btn-danger' onClick={() => logout()}>Logout</button>
       </div>
     )
   }
@@ -31,4 +31,4 @@ const mapStateToProps = state => ({
   user: state.auth.user,
 })
 
-export default connect(mapStateToProps, {logout})(Dashboard)
+export default connect(mapStateToProps, { logout })(Dashboard)

@@ -78,4 +78,6 @@ export const login = (email, password) => async dispatch => {
 }
 
 // Logout
-export const logout = () => ({ type: LOGOUT })
+export const logout = () => async dispatch => {
+  dispatch({ type: LOGOUT })
+}

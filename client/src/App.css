@@ -115,7 +115,12 @@
 
 .admin-new-clients .file {
   height: 1px;
+  width: 10px;
   margin-left: 50px;
   margin-top: -2px;
   border: 1px solid transparent;
+}
+
+.admin-new-clients .fileInputDiv {
+  margin-top: -25px;
 }

@@ -1,4 +1,5 @@
 import api from '../utils/api'
+import { setAlert } from './alert'
 import {
   ADMIN_CLIENTS_LOADED
 } from './types'
@@ -22,6 +23,7 @@ export const addNewClient = (formData, history) => async dispatch => {
   const res = await api.post('/admin/addNewClient', formData)
 
   if (res.data.success) {
-    console.log('ok')
+    dispatch(setAlert('Client Added Successfully!', 'success'))
+    dispatch(goPage(history, 'clients'))
   }
 }

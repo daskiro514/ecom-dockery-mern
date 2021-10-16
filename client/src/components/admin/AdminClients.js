@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { getAdminClients, goPage } from '../../actions/admin'
 import { useHistory } from 'react-router'
+import { formatDate } from '../../utils/formatDate1'
 
 const AdminClients = ({ getAdminClients, clients, goPage }) => {
   const history = useHistory()
@@ -45,10 +46,10 @@ const AdminClients = ({ getAdminClients, clients, goPage }) => {
                   <tr key={index}>
                     <td>{item.firstName}</td>
                     <td>{item.lastName}</td>
-                    <td></td>
+                    <td>{formatDate(item.dateOfBirth)}</td>
                     <td>{item.email}</td>
-                    <td></td>
-                    <td><span className="badge badge-pending">Documents Pending</span></td>
+                    <td>{item.phoneNumber}</td>
+                    <td><span className={'badge ' + (item.status === 'Approved' ? 'badge-info' : 'badge-pending')}>{item.status}</span></td>
                   </tr>
                 )}
               </tbody>

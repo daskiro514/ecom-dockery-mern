@@ -4,6 +4,7 @@ import PrivateRoute from '../routing/PrivateRoute'
 import AdminSidebar from './AdminSidebar'
 import AdminDashboard from './AdminDashboard'
 import AdminClients from './AdminClients'
+import AdminClient from './AdminClient'
 import AdminNewClient from './AdminNewClient'
 import AdminSettings from './AdminSettings'
 import AdminHeader from './AdminHeader'
@@ -19,6 +20,7 @@ const Admin = () => {
           <Router basename="/dashboard">
             <PrivateRoute exact path="/" component={AdminDashboard} />
             <PrivateRoute exact path="/clients" component={AdminClients} />
+            <PrivateRoute exact path="/client" component={AdminClient} />
             <PrivateRoute exact path="/addClient" component={AdminNewClient} />
             <PrivateRoute exact path="/settings" component={AdminSettings} />
           </Router>
