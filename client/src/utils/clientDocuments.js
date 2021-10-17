@@ -1,14 +1,16 @@
 import { fileUrl } from "./fileUrl"
 
 export const documenetsPendingCheck = client => {
-  var pendingDocumentsNumber = 0
-  if (client.einVerificationLetterStatus === 'Pending') pendingDocumentsNumber++
-  if (client.articlesOfOrganizationStatus === 'Pending') pendingDocumentsNumber++
-  if (client.w9Status === 'Pending') pendingDocumentsNumber++
-  if (client.bankCardStatus === 'Pending') pendingDocumentsNumber++
-  if (client.usDriversLicenseStatus === 'Pending') pendingDocumentsNumber++
-  if (client.creditDebitCardFrontStatus === 'Pending') pendingDocumentsNumber++
-  if (client.creditDebitCardBackStatus === 'Pending') pendingDocumentsNumber++
+  var approvedDocumentsNumber = 0, pendingDocumentsNumber = 0
+  if (client.einVerificationLetterStatus === 'Approved') approvedDocumentsNumber++
+  if (client.articlesOfOrganizationStatus === 'Approved') approvedDocumentsNumber++
+  if (client.w9Status === 'Approved') approvedDocumentsNumber++
+  if (client.bankCardStatus === 'Approved') approvedDocumentsNumber++
+  if (client.usDriversLicenseStatus === 'Approved') approvedDocumentsNumber++
+  if (client.creditDebitCardFrontStatus === 'Approved') approvedDocumentsNumber++
+  if (client.creditDebitCardBackStatus === 'Approved') approvedDocumentsNumber++
+
+  pendingDocumentsNumber = 7 - approvedDocumentsNumber
 
   if (pendingDocumentsNumber === 0) return 'All Documents Approved'
   else return `${pendingDocumentsNumber} Documents Are Pending`

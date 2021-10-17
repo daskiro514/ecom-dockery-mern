@@ -33,6 +33,7 @@
 
 .bg-admin .admin-dashboard .table-customer-store-statistics table tr th {
   padding-top: 0;
+  border: 0;
 }
 
 .bg-admin .admin-dashboard .table-customer-store-statistics table tr td {
@@ -76,6 +77,10 @@
 
 .badge-pending {
   background-color: #CE8696;
+}
+
+.rounded-lg {
+  border-radius: 15px !important;
 }
 
 .table-hover {
@@ -140,4 +145,56 @@
 
 table tbody tr td {
   vertical-align: middle !important;
+}
+
+.border-4 {
+  border-width: 4px !important;
+}
+
+.border-light-green {
+  border-color: #7AD682 !important;
+}
+
+.admin-client-store .table-client-store table tr th {
+  padding-top: 0;
+  border: 0;
+}
+
+.admin-client-store .table-client-store table tr td {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.admin-client-store .table-client-store table tbody tr .have-length {
+  min-width: 160px;
+}
+
+.admin-client-store .table-client-store table {
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  margin-top: -10px;
+  /* correct offset on first border spacing if desired */
+}
+
+.admin-client-store .table-client-store td {
+  border: solid 1px #ddd !important;
+  border-style: solid none !important;
+}
+
+.admin-client-store .table-client-store td:first-child {
+  border-left-style: solid !important;
+  border-top-left-radius: 10px !important;
+  border-bottom-left-radius: 10px !important;
+}
+
+.admin-client-store .table-client-store td:last-child {
+  border-right-style: solid !important;
+  border-bottom-right-radius: 10px !important;
+  border-top-right-radius: 10px !important;
+}
+
+.deni-react-treeview-container {
+  width: inherit !important;
+  border: 0 !important;
+  background: none !important;
 }

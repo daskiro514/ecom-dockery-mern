@@ -59,7 +59,7 @@ const AdminClientDocuments = ({ client, updateClientDocumentStatus }) => {
                 <td>{item.name}</td>
                 <td className='text-center'>
                   {item.type === 'image' ?
-                    <a href={item.path} target='_blank' rel='noreferrer'><img src={item.path} alt='DOCUMENT' height='50px' /></a>
+                    <a href={item.path} target='_blank' rel='noreferrer'><img src={item.path} alt='DOCUMENT' height='50px' width='70px' /></a>
                     :
                     <a href={item.path}>Document</a>
                   }

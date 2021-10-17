@@ -4,6 +4,7 @@ import { getClient, setClientCurrentPage } from '../../../actions/admin'
 import { documenetsPendingCheck } from '../../../utils/clientDocuments'
 import Spinner from '../../layout/Spinner'
 import AdminClientDocuments from './AdminClientDocuments'
+import AdminClientStore from './AdminClientStore'
 
 const AdminClient = ({ match, getClient, client, setClientCurrentPage, currentPage }) => {
 
@@ -25,7 +26,7 @@ const AdminClient = ({ match, getClient, client, setClientCurrentPage, currentPa
           <div>
             <span className={'text-white badge ' + (documenetsPendingCheck(client) === 'All Documents Approved' ? 'badge-info' : 'badge-pending')}><i className='fa fa-exclamation-triangle'></i> {documenetsPendingCheck(client)}</span>
           </div>
-          {currentPage === 'store' ? <div>Store</div> : null}
+          {currentPage === 'store' ? <AdminClientStore /> : null}
           {currentPage === 'document' ? <AdminClientDocuments /> : null}
           {currentPage === 'setting' ? <div>Setting</div> : null}
         </>
