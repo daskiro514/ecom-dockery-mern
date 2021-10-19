@@ -28,6 +28,14 @@ const AfterRegister = () => {
                 </span>
               </div>
             </div>
+            <div className='row mx-1 h5 menuItem signoutLink'>
+              <div className='d-flex align-items-center'>
+                <i className='fa fa-sign-out pt-2 mr-2 h6'></i>
+                <span>
+                  <Link to='/'>Login</Link>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
         <div className='col-lg-10 col-md-8 p-3'>

@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router'
 import { register } from '../../actions/auth'
+import { Link } from 'react-router-dom'
 
 const Register = ({ register }) => {
   const history = useHistory()
@@ -78,7 +79,17 @@ const Register = ({ register }) => {
             <div className='row mx-1 h5 menuItem'>
               <div className='d-flex align-items-center'>
                 <i className='fa fa-database pt-2 mr-2 h6'></i>
-                <span>Registration</span>
+                <span>
+                  <Link to='/register'>Registration</Link>
+                </span>
+              </div>
+            </div>
+            <div className='row mx-1 h5 menuItem signoutLink'>
+              <div className='d-flex align-items-center'>
+                <i className='fa fa-sign-out pt-2 mr-2 h6'></i>
+                <span>
+                  <Link to='/'>Login</Link>
+                </span>
               </div>
             </div>
           </div>
