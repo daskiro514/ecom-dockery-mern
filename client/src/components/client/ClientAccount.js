@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { formatDate } from '../../utils/formatDate1'
 import { getDocumentList } from '../../utils/clientDocuments'
+import { documenetsPendingCheck } from '../../utils/clientDocuments'
 
 const ClientAccount = ({ client }) => {
 
@@ -9,6 +10,9 @@ const ClientAccount = ({ client }) => {
     <div className='admin-client client-account'>
       <div className='h4 pt-2'>
         My Account
+      </div>
+      <div>
+        <span className={'text-white badge ' + (documenetsPendingCheck(client) === 'All Documents Approved' ? 'badge-info' : 'badge-pending')}><i className='fa fa-exclamation-triangle'></i> {documenetsPendingCheck(client)}</span>
       </div>
       <div className='bg-white rounded-lg p-3 mt-3'>
         <div className='row'>
