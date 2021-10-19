@@ -5,7 +5,7 @@ import earning from '../../img/common/earning.png'
 const AdminDashboard = () => {
 
   return (
-    <div className='container admin-dashboard'>
+    <div className='admin-dashboard'>
       <div className='h4 pt-2 pl-1'>
         Admin Dashboard
       </div>

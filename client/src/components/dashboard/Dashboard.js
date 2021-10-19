@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import Admin from '../admin/Admin'
-import Customer from '../customer/Customer'
+import Client from '../client/Client'
 import { logout } from '../../actions/auth'
 
 const Dashboard = ({ isAuthenticated, user, logout }) => {
@@ -12,7 +12,7 @@ const Dashboard = ({ isAuthenticated, user, logout }) => {
     )
   } else if (isAuthenticated && user && user.type === "client") {
     return (
-      <Customer />
+      <Client />
     )
   } else if (isAuthenticated !== true) {
     return <Redirect to={'/'} />
