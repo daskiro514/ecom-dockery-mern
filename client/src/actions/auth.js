@@ -1,8 +1,6 @@
 import api from '../utils/api'
 import { setAlert } from './alert'
 import {
-  REGISTER_SUCCESS,
-  REGISTER_FAIL,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
@@ -27,26 +25,13 @@ export const loadUser = () => async dispatch => {
 }
 
 // Register User
-export const register = formData => async dispatch => {
-  try {
-    const res = await api.post('/users', formData)
+export const register = (formData, history) => async dispatch => {
+  const res = await api.post('/admin/addNewClient', formData)
 
-    dispatch({
-      type: REGISTER_SUCCESS,
-      payload: res.data
-    })
-    dispatch(loadUser())
-  } catch (err) {
-    const errors = err.response.data.errors
-
-    if (errors) {
-      errors.forEach(error => dispatch(setAlert(error.msg, 'danger')))
-    }
-
-    dispatch({
-      type: REGISTER_FAIL
-    })
+  if (res.data.success) {
+    dispatch(setAlert('Received your request!', 'success'))
   }
+  history.push('after-register')
 }
 
 // Login User
