@@ -19,7 +19,7 @@ const AdminClientStore = () => {
         if (index < 3) return
         if (row[0] === null && row[0] === null) return
         var outRow = {
-          date: new Date(row[0]),
+          date: new Date(row[0]).toLocaleString(undefined, { timeZone: 'America/Los_Angeles' }),
           product: row[1],
           amazonSalePrice: row[2],
           productCost: row[3],
@@ -70,7 +70,7 @@ const AdminClientStore = () => {
               </tr>
             </thead>
             <tbody>
-              {orders.map((item, index) => 
+              {orders.map((item, index) =>
                 <tr key={index}>
                   <td>{index}</td>
                   <td>{String(item.date)}</td>
