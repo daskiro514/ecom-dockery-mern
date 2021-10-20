@@ -2,76 +2,90 @@ import React from 'react'
 import { connect } from 'react-redux'
 import soccerBall from '../../../img/common/soccerBall.png'
 import DeniReactTreeView from 'deni-react-treeview'
+import { formatCategories } from '../../../utils/formatCategories'
+import readXlsxFile from 'read-excel-file'
 
 const AdminClientStore = () => {
-  const fruitsAndVegetables = [
-    {
-      id: 100,
-      text: 'Audio',
-      children: [
-        {
-          id: 101,
-          text: 'HeadPhones',
-        },
-        {
-          id: 102,
-          text: 'Computer Speakers',
-          isLeaf: true
-        },
-        {
-          id: 103,
-          text: 'Bluetooth Speakers',
-          isLeaf: true
-        },
-        {
-          id: 104,
-          text: 'Audio Cables',
-          isLeaf: true
-        },
-      ]
-    },
-    {
-      id: 200,
-      text: 'Cameras',
-      children: [
-        {
-          id: 201,
-          text: 'Carrot',
-          isLeaf: true
-        },
-      ]
-    },
-    {
-      id: 300,
-      text: 'Batteries',
-      children: [
-        {
+  const fileInputW9Ref = React.useRef()
 
-        }
-      ]
-    },
-    {
-      id: 400,
-      text: 'Office Equipment',
-      children: [
-        {
+  const [excelFile, setExcelFile] = React.useState([])
+  const [orders, setOrders] = React.useState([])
 
+  const excelToJson = file => {
+    setExcelFile(excelFile)
+    readXlsxFile(file).then((rows) => {
+      var outRows = []
+      rows.forEach((row, index) => {
+        if (index < 3) return
+        if (row[0] === null && row[0] === null) return
+        var outRow = {
+          date: new Date(row[0]),
+          product: row[1],
+          amazonSalePrice: row[2],
+          productCost: row[3],
+          shippingCost: row[4],
+          supplierTax: row[5],
+          grossProfit: row[6],
+          amazonFees: row[7],
+          adminFees: row[8],
+          netProfit: row[9],
+          shipStatus: row[10],
+          refunded: row[11],
+          shipperName: row[12],
+          walmartOrder: row[13],
+          amazonOrderID: row[14],
+          notes: row[15],
+          amazonTax: row[16],
+          returnLabelFees: row[17],
+          amazonRefundAudit: row[18],
+          amazonOrderIdTotalAudit: row[19],
+          refundLabelAudit: row[20],
+          adminFeeFormula: row[21],
         }
-      ]
-    },
-    {
-      id: 500,
-      text: 'OutDoor',
-      children: [
-        {
+        outRows.push(outRow)
+      })
+      setOrders(outRows)
+    })
+  }
 
-        }
-      ]
-    },
-  ]
 
   return (
     <div className='admin-client-store'>
+      <div className='p-3 bg-white rounded-lg'>
+        <div className='h5'>
+          Excel File Content
+        </div>
+        <div className='table-responsive table-client-store'>
+          <table className='table'>
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Date</th>
+                <th>Product</th>
+                <th>Amazon Sale Price</th>
+                <th>Product Cost</th>
+                <th>Shipping Cost</th>
+                <th>Supplier Tax</th>
+                <th>...</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((item, index) => 
+                <tr key={index}>
+                  <td>{index}</td>
+                  <td>{String(item.date)}</td>
+                  <td>{item.product}</td>
+                  <td>{item.amazonSalePrice}</td>
+                  <td>{item.productCost}</td>
+                  <td>{item.shippingCost}</td>
+                  <td>{item.supplierTax}</td>
+                  <td>...</td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div className='row'>
         <div className='col-lg-3 mt-3'>
           <div className='p-3 bg-white rounded-lg'>
@@ -79,7 +93,7 @@ const AdminClientStore = () => {
               Item Management
             </div>
             <div>
-              <DeniReactTreeView items={fruitsAndVegetables} />
+              <DeniReactTreeView items={formatCategories()} />
             </div>
           </div>
         </div>
@@ -87,6 +101,24 @@ const AdminClientStore = () => {
           <div className='p-3 bg-white rounded-lg'>
             <div className='h5'>
               Shop Management
+            </div>
+            <div className='text-right'>
+              <button
+                className='btn btn-light shadow mb-3'
+                onClick={() => fileInputW9Ref.current.click()}
+              >
+                <i className='fa fa-cloud-upload mr-2'></i>
+                Upload Spreadsheet
+              </button>
+              <input
+                type='file'
+                className='file excel-importer'
+                id="excelImporter"
+                onChange={e => excelToJson(e.target.files[0])}
+                value={excelFile}
+                ref={fileInputW9Ref}
+                required
+              />
             </div>
             <div className='table-responsive table-client-store'>
               <table className='table table-borderless'>
