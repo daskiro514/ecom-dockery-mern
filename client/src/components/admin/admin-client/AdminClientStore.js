@@ -19,7 +19,8 @@ const AdminClientStore = () => {
         if (index < 3) return
         if (row[0] === null && row[0] === null) return
         var outRow = {
-          date: new Date(row[0]).toLocaleString(undefined, { timeZone: 'America/Los_Angeles' }),
+          // date: new Date(row[0]).toLocaleString(undefined, { timeZone: 'America/Los_Angeles' }),
+          date: row[0],
           product: row[1],
           amazonSalePrice: row[2],
           productCost: row[3],
