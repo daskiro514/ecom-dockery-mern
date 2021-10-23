@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
 const UserSchema = new mongoose.Schema({
   firstName: {
@@ -116,6 +116,6 @@ const UserSchema = new mongoose.Schema({
   amazonStoreUrl: {
     type: String
   },
-});
+})
 
-module.exports = mongoose.model('user', UserSchema);
+module.exports = mongoose.model('user', UserSchema)

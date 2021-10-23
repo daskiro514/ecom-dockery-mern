@@ -1,15 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import soccerBall from '../../../img/common/soccerBall.png'
-import DeniReactTreeView from 'deni-react-treeview'
-import { formatCategories } from '../../../utils/formatCategories'
 import readXlsxFile from 'read-excel-file'
+import { getClientOrders, storeClientOrders, storeClientNotification } from '../../../actions/admin'
+import { formatDateAndTimeInPDT } from '../../../utils/formatDate1'
+import { setAlert } from '../../../actions/alert'
 
-const AdminClientStore = () => {
+const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, clientOrders, storeClientNotification, setAlert }) => {
+  React.useEffect(() => {
+    getClientOrders(clientID)
+  }, [getClientOrders, clientID])
+
   const fileInputW9Ref = React.useRef()
 
   const [excelFile, setExcelFile] = React.useState([])
   const [orders, setOrders] = React.useState([])
+  const [notification, setNotification] = React.useState('')
 
   const excelToJson = file => {
     setExcelFile(excelFile)
@@ -19,7 +24,6 @@ const AdminClientStore = () => {
         if (index < 3) return
         if (row[0] === null && row[0] === null) return
         var outRow = {
-          // date: new Date(row[0]).toLocaleString(undefined, { timeZone: 'America/Los_Angeles' }),
           date: row[0],
           product: row[1],
           amazonSalePrice: row[2],
@@ -49,116 +53,105 @@ const AdminClientStore = () => {
     })
   }
 
-
   return (
     <div className='admin-client-store'>
-      <div className='p-3 bg-white rounded-lg'>
-        <div className='h5'>
-          Excel File Content
-        </div>
-        <div className='table-responsive table-client-store'>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>No</th>
-                <th>Date</th>
-                <th>Product</th>
-                <th>Amazon Sale Price</th>
-                <th>Product Cost</th>
-                <th>Shipping Cost</th>
-                <th>Supplier Tax</th>
-                <th>...</th>
-              </tr>
-            </thead>
-            <tbody>
-              {orders.map((item, index) =>
-                <tr key={index}>
-                  <td>{index}</td>
-                  <td>{String(item.date)}</td>
-                  <td>{item.product}</td>
-                  <td>{item.amazonSalePrice}</td>
-                  <td>{item.productCost}</td>
-                  <td>{item.shippingCost}</td>
-                  <td>{item.supplierTax}</td>
-                  <td>...</td>
+      <div className='mt-3'>
+        <div className='p-3 bg-white rounded-lg'>
+          <div className='h5'>
+            Shop Management
+          </div>
+          <div className='text-right'>
+            <button
+              className='btn btn-light shadow mb-3'
+              onClick={() => fileInputW9Ref.current.click()}
+            >
+              <i className='fa fa-cloud-upload mr-2'></i>
+              Upload Spreadsheet
+            </button>
+            <button
+              className='btn btn-light shadow mb-3 ml-3'
+              style={{ display: orders.length ? 'inline-block' : 'none' }}
+              onClick={() => {
+                storeClientOrders(clientID, orders)
+                setOrders([])
+              }}
+            >Submit</button>
+            <input
+              type='file'
+              className='file excel-importer'
+              id="excelImporter"
+              onChange={e => excelToJson(e.target.files[0])}
+              value={excelFile}
+              ref={fileInputW9Ref}
+              required
+            />
+          </div>
+          <div className='table-responsive table-client-store'>
+            <table className='table table-borderless'>
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Date</th>
+                  <th>Product</th>
+                  <th>Amazon Sale Price</th>
+                  <th>Product Cost</th>
+                  <th>Shipping Cost</th>
+                  <th>Supplier Tax</th>
+                  <th>Gross Profit</th>
+                  <th>Amazon Fees</th>
+                  <th>Action</th>
                 </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-lg-3 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
-            <div className='h5'>
-              Item Management
-            </div>
-            <div>
-              <DeniReactTreeView items={formatCategories()} />
-            </div>
-          </div>
-        </div>
-        <div className='col-lg-9 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
-            <div className='h5'>
-              Shop Management
-            </div>
-            <div className='text-right'>
-              <button
-                className='btn btn-light shadow mb-3'
-                onClick={() => fileInputW9Ref.current.click()}
-              >
-                <i className='fa fa-cloud-upload mr-2'></i>
-                Upload Spreadsheet
-              </button>
-              <input
-                type='file'
-                className='file excel-importer'
-                id="excelImporter"
-                onChange={e => excelToJson(e.target.files[0])}
-                value={excelFile}
-                ref={fileInputW9Ref}
-                required
-              />
-            </div>
-            <div className='table-responsive table-client-store'>
-              <table className='table table-borderless'>
-                <thead>
-                  <tr>
-                    <th>Product Name</th>
-                    <th>Image</th>
-                    <th>Sales</th>
-                    <th>Record Point</th>
-                    <th>Stock</th>
-                    <th>Amount</th>
-                    <th>Action</th>
+              </thead>
+              <tbody>
+                {clientOrders.map((item, index) =>
+                  <tr key={index} className='table-row-customer-store-statistics-round'>
+                    <td>{index + 1}</td>
+                    <td>{formatDateAndTimeInPDT(item.date)}</td>
+                    <td>{item.product}</td>
+                    <td>{item.amazonSalePrice}</td>
+                    <td>{item.productCost}</td>
+                    <td>{item.shippingCost}</td>
+                    <td>{item.supplierTax}</td>
+                    <td>{item.grossProfit}</td>
+                    <td>{item.amazonFees}</td>
+                    <td>
+                      <button className='btn btn-sm border'>edit order</button>
+                    </td>
                   </tr>
-                </thead>
-                <tbody>
-                  {[1, 2, 3, 4].map((item, index) =>
-                    <tr key={index} className='table-row-customer-store-statistics-round'>
-                      <td>Joe Frank</td>
-                      <td><img src={soccerBall} alt='PRODUCT' height='50px' width='70px' /></td>
-                      <td>854</td>
-                      <td>08</td>
-                      <td>447</td>
-                      <td>$252.01</td>
-                      <td>
-                        <button className='btn btn-sm border'>edit order</button>
-                      </td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
-            </div>
+                )}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
       <div className='row'>
-        <div className='col-lg-4 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
+        <div className='col-lg-3'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <p>Notifications</p>
+            <textarea
+              className='form-control'
+              onChange={e => setNotification(e.target.value)}
+              value={notification}
+            />
+            <div className='text-center mt-4'>
+              <button
+                className='btn btn-sm btn-light shadow rounded-lg'
+                onClick={() => {
+                  if (notification.length) {
+                    storeClientNotification(clientID, notification)
+                    setNotification('')
+                  } else {
+                    setAlert('Notification Invalid!', 'warning')
+                  }
+                }}
+              >Submit</button>
+            </div>
+          </div>
+        </div>
+        <div className='col-lg-3'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
             <div className='d-flex justify-content-center align-items-center'>
-              <div className='border border-4 border-light-green rounded-circle text-center mr-4 p-2'>
+              <div className='border border-4 border-light-green rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
@@ -167,11 +160,9 @@ const AdminClientStore = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className='col-lg-4 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
             <div className='d-flex justify-content-center align-items-center'>
-              <div className='border rounded-circle text-center mr-4 p-2'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
@@ -182,10 +173,10 @@ const AdminClientStore = () => {
             </div>
           </div>
         </div>
-        <div className='col-lg-4 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
+        <div className='col-lg-3'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
             <div className='d-flex justify-content-center align-items-center'>
-              <div className='border rounded-circle text-center mr-4 p-2'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
@@ -195,11 +186,9 @@ const AdminClientStore = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className='col-lg-4 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
             <div className='d-flex justify-content-center align-items-center'>
-              <div className='border rounded-circle text-center mr-4 p-2'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
@@ -210,10 +199,10 @@ const AdminClientStore = () => {
             </div>
           </div>
         </div>
-        <div className='col-lg-4 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
+        <div className='col-lg-3'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
             <div className='d-flex justify-content-center align-items-center'>
-              <div className='border rounded-circle text-center mr-4 p-2'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
@@ -223,11 +212,9 @@ const AdminClientStore = () => {
               </div>
             </div>
           </div>
-        </div>
-        <div className='col-lg-4 mt-3'>
-          <div className='p-3 bg-white rounded-lg'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
             <div className='d-flex justify-content-center align-items-center'>
-              <div className='border rounded-circle text-center mr-4 p-2'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
@@ -244,7 +231,7 @@ const AdminClientStore = () => {
 }
 
 const mapStateToProps = state => ({
-
+  clientOrders: state.admin.adminClientOrders
 })
 
-export default connect(mapStateToProps, {})(AdminClientStore)
+export default connect(mapStateToProps, { getClientOrders, storeClientOrders, storeClientNotification, setAlert })(AdminClientStore)

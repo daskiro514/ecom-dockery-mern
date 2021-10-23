@@ -8,6 +8,8 @@ const gravatar = require('gravatar')
 
 // MODEL
 const User = require('../../models/User')
+const Order = require('../../models/Order')
+const Notification = require('../../models/Notification')
 
 // FILE UPLOAD
 const fileUpload = require('../../utils/fileUpload')
@@ -80,8 +82,49 @@ router.get('/getClient/:id', async (req, res) => {
 
 router.post('/updateClientDocumentStatus', async (req, res) => {
   await User.findByIdAndUpdate(req.body.clientID, {
-    [req.body.keyInDB + 'Status']: req.body.updateType === 'Approve' ? 'Approved' : req.body.updateType === 'Deny' ? 'Denied' : 'Pending' 
+    [req.body.keyInDB + 'Status']: req.body.updateType === 'Approve' ? 'Approved' : req.body.updateType === 'Deny' ? 'Denied' : 'Pending'
   })
+
+  res.json({
+    success: true
+  })
+})
+
+router.get('/getClientOrders/:id', async (req, res) => {
+  const clientID = req.params.id
+  const orders = await Order.find({ client: clientID })
+
+  res.json({
+    success: true,
+    orders
+  })
+})
+
+router.post('/storeClientOrders', async (req, res) => {
+  const clientID = req.body.clientID
+  const orders = req.body.orders
+
+  for (var index = 0; index < orders.length; index++) {
+    var order = orders[index]
+    var newOrder = new Order({
+      ...order
+    })
+    newOrder.client = clientID
+    
+    await newOrder.save()
+  }
+
+  res.json({
+    success: true
+  })
+})
+
+router.post('/storeClientNotification', async (req, res) => {
+  var newNotification = new Notification({
+    client: req.body.clientID,
+    content: req.body.notification
+  })
+  await newNotification.save()
 
   res.json({
     success: true

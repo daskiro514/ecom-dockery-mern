@@ -37,6 +37,9 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className='col-lg-9'>
+          <div className='bg-white m-1 mb-4 rounded-lg p-3'>
+            <img src={earning} alt='EARNING' className='img-fluid' />
+          </div>
           <div className='bg-white m-1 mb-4 rounded-lg'>
             <div className='p-3 h5'>
               Customer Store Statistics
@@ -83,73 +86,6 @@ const AdminDashboard = () => {
                 </table>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-lg-6'>
-          <div className='row'>
-            <div className='col-lg-6'>
-              <div className='bg-white m-1 mb-4 rounded-lg p-3'>
-                <div className='d-flex justify-content-center align-items-center pb-2'>
-                  <div className='border rounded-circle text-center mr-3 p-2'>
-                    <i className='fa fa-shopping-cart' style={{ fontSize: '40px' }}></i>
-                  </div>
-                  <div>
-                    <div>Total Sales</div>
-                    <div className='h6'>$314K</div>
-                    <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-lg-6'>
-              <div className='bg-white m-1 mb-4 rounded-lg p-3'>
-                <div className='d-flex justify-content-center align-items-center pb-2'>
-                  <div className='border rounded-circle text-center mr-3 p-2'>
-                    <i className='fa fa-shopping-cart' style={{ fontSize: '40px' }}></i>
-                  </div>
-                  <div>
-                    <div>Total Sales</div>
-                    <div className='h6'>$314K</div>
-                    <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-lg-6'>
-              <div className='bg-white m-1 mb-4 rounded-lg p-3'>
-                <div className='d-flex justify-content-center align-items-center pb-2'>
-                  <div className='border rounded-circle text-center mr-3 p-2'>
-                    <i className='fa fa-bullhorn' style={{ fontSize: '40px' }}></i>
-                  </div>
-                  <div>
-                    <div>Total Sales</div>
-                    <div className='h6'>$15K</div>
-                    <small className='text-danger'><i className='fa fa-arrow-down text-danger'></i> 9% Since last month</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className='col-lg-6'>
-              <div className='bg-white m-1 mb-4 rounded-lg p-3'>
-                <div className='d-flex justify-content-center align-items-center pb-2'>
-                  <div className='border rounded-circle text-center mr-3 p-2'>
-                    <i className='fa fa-bullhorn' style={{ fontSize: '40px' }}></i>
-                  </div>
-                  <div>
-                    <div>Total Sales</div>
-                    <div className='h6'>$15K</div>
-                    <small className='text-danger'><i className='fa fa-arrow-down text-danger'></i> 9% Since last month</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='col-lg-6'>
-          <div className='bg-white m-1 mb-4 rounded-lg p-3'>
-            <img src={earning} alt='EARNING' className='img-fluid' />
           </div>
         </div>
       </div>

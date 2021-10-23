@@ -26,7 +26,7 @@ const AdminClient = ({ match, getClient, client, setClientCurrentPage, currentPa
           <div>
             <span className={'text-white badge ' + (documenetsPendingCheck(client) === 'All Documents Approved' ? 'badge-info' : 'badge-pending')}><i className='fa fa-exclamation-triangle'></i> {documenetsPendingCheck(client)}</span>
           </div>
-          {currentPage === 'store' ? <AdminClientStore /> : null}
+          {currentPage === 'store' ? <AdminClientStore clientID={match.params.id} /> : null}
           {currentPage === 'document' ? <AdminClientDocuments /> : null}
           {currentPage === 'setting' ? <div>Setting</div> : null}
         </>
