@@ -4,8 +4,9 @@ import readXlsxFile from 'read-excel-file'
 import { getClientOrders, storeClientOrders, storeClientNotification } from '../../../actions/admin'
 import { formatDateAndTimeInPDT } from '../../../utils/formatDate1'
 import { setAlert } from '../../../actions/alert'
+import Spinner from '../../layout/Spinner'
 
-const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, clientOrders, storeClientNotification, setAlert }) => {
+const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, clientOrders, storeClientNotification, setAlert, isLoading }) => {
   React.useEffect(() => {
     getClientOrders(clientID)
   }, [getClientOrders, clientID])
@@ -55,75 +56,97 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
 
   return (
     <div className='admin-client-store'>
-      <div className='mt-3'>
-        <div className='p-3 bg-white rounded-lg'>
-          <div className='h5'>
-            Shop Management
-          </div>
-          <div className='text-right'>
-            <button
-              className='btn btn-light shadow mb-3'
-              onClick={() => fileInputW9Ref.current.click()}
-            >
-              <i className='fa fa-cloud-upload mr-2'></i>
-              Upload Spreadsheet
-            </button>
-            <button
-              className='btn btn-light shadow mb-3 ml-3'
-              style={{ display: orders.length ? 'inline-block' : 'none' }}
-              onClick={() => {
-                storeClientOrders(clientID, orders)
-                setOrders([])
-              }}
-            >Submit</button>
-            <input
-              type='file'
-              className='file excel-importer'
-              id="excelImporter"
-              onChange={e => excelToJson(e.target.files[0])}
-              value={excelFile}
-              ref={fileInputW9Ref}
-              required
-            />
-          </div>
-          <div className='table-responsive table-client-store'>
-            <table className='table table-borderless'>
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Date</th>
-                  <th>Product</th>
-                  <th>Amazon Sale Price</th>
-                  <th>Product Cost</th>
-                  <th>Shipping Cost</th>
-                  <th>Supplier Tax</th>
-                  <th>Gross Profit</th>
-                  <th>Amazon Fees</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {clientOrders.map((item, index) =>
-                  <tr key={index} className='table-row-customer-store-statistics-round'>
-                    <td>{index + 1}</td>
-                    <td>{formatDateAndTimeInPDT(item.date)}</td>
-                    <td>{item.product}</td>
-                    <td>{item.amazonSalePrice}</td>
-                    <td>{item.productCost}</td>
-                    <td>{item.shippingCost}</td>
-                    <td>{item.supplierTax}</td>
-                    <td>{item.grossProfit}</td>
-                    <td>{item.amazonFees}</td>
-                    <td>
-                      <button className='btn btn-sm border'>edit order</button>
-                    </td>
+      {isLoading
+        ?
+        <Spinner />
+        :
+        <div className='mt-3'>
+          <div className='p-3 bg-white rounded-lg'>
+            <div className='h5'>
+              Shop Management
+            </div>
+            <div className='text-right'>
+              <button
+                className='btn btn-light shadow mb-3'
+                onClick={() => fileInputW9Ref.current.click()}
+              >
+                <i className='fa fa-cloud-upload mr-2'></i>
+                Upload Spreadsheet
+              </button>
+              <button
+                className='btn btn-light shadow mb-3 ml-3'
+                style={{ display: orders.length ? 'inline-block' : 'none' }}
+                onClick={() => {
+                  storeClientOrders(clientID, orders)
+                  setOrders([])
+                }}
+              >Submit</button>
+              <input
+                type='file'
+                className='file excel-importer'
+                id="excelImporter"
+                onChange={e => excelToJson(e.target.files[0])}
+                value={excelFile}
+                ref={fileInputW9Ref}
+                required
+              />
+            </div>
+            <div className='table-responsive table-client-store'>
+              <table className='table table-borderless'>
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th className='min-width-1'>Date</th>
+                    <th className='min-width-2'>Product</th>
+                    <th>Amazon Sale Price</th>
+                    <th>Product Cost</th>
+                    <th>Shipping Cost</th>
+                    <th>Supplier Tax</th>
+                    <th>Gross Profit</th>
+                    <th>Amazon Fees</th>
+                    <th>Net Profit</th>
+                    <th>Ship Status</th>
+                    <th>Refunded</th>
+                    <th>Shipper Name</th>
+                    <th>Walmart Order</th>
+                    <th>Amazon Order ID</th>
+                    <th>Notes</th>
+                    <th>Amazon Tax</th>
+                    <th>Action</th>
                   </tr>
-                )}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {clientOrders.map((item, index) =>
+                    <tr key={index} className='table-row-customer-store-statistics-round'>
+                      <td>{index + 1}</td>
+                      <td>{formatDateAndTimeInPDT(item.date)}</td>
+                      <td>{item.product}</td>
+                      <td>{item.amazonSalePrice}</td>
+                      <td>{item.productCost}</td>
+                      <td>{item.shippingCost}</td>
+                      <td>{item.supplierTax}</td>
+                      <td>{item.grossProfit}</td>
+                      <td>{item.amazonFees}</td>
+                      <td>{item.netProfit}</td>
+                      <td>{item.shipStatus}</td>
+                      <td>{item.refunded}</td>
+                      <td>{item.shipperName}</td>
+                      <td>{item.walmartOrder}</td>
+                      <td>{item.amazonOrderID}</td>
+                      <td>{item.notes}</td>
+                      <td>{item.amazonTax}</td>
+                      <td>
+                        <button className='btn btn-sm border'>edit order</button>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
-      </div>
+      }
+
       <div className='row'>
         <div className='col-lg-3'>
           <div className='p-3 bg-white rounded-lg mt-3'>
@@ -231,7 +254,8 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
 }
 
 const mapStateToProps = state => ({
-  clientOrders: state.admin.adminClientOrders
+  clientOrders: state.admin.adminClientOrders,
+  isLoading: state.admin.isLoading
 })
 
 export default connect(mapStateToProps, { getClientOrders, storeClientOrders, storeClientNotification, setAlert })(AdminClientStore)

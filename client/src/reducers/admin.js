@@ -1,4 +1,5 @@
 import {
+  ADMIN_PAGE_SET_LOADING,
   ADMIN_CLIENTS_LOADED,
   ADMIN_CLEINT_LOADED,
   ADMIN_CLIENT_SET_CURRENT_PAGE,
@@ -6,6 +7,7 @@ import {
 } from '../actions/types'
 
 const initialState = {
+  isLoading: false,
   clients: [],
   adminClient: null,
   adminClientCurrentPage: 'document',
@@ -16,6 +18,11 @@ const adminReducer = (state = initialState, action) => {
   const {type, payload} = action
 
   switch (type) {
+    case ADMIN_PAGE_SET_LOADING: 
+      return {
+        ...state,
+        isLoading: payload
+      }
     case ADMIN_CLIENTS_LOADED: 
       return {
         ...state,

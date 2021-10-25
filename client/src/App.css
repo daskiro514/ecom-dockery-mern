@@ -207,3 +207,11 @@ a {
 .admin-client-store .excel-importer {
   display: block;
 }
+
+.min-width-1 {
+  min-width: 150px;
+}
+
+.min-width-2 {
+  min-width: 250px;
+}

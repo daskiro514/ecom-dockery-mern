@@ -1,11 +1,19 @@
 import api from '../utils/api'
 import { setAlert } from './alert'
 import {
+  ADMIN_PAGE_SET_LOADING,
   ADMIN_CLIENTS_LOADED,
   ADMIN_CLEINT_LOADED,
   ADMIN_CLIENT_SET_CURRENT_PAGE,
-  ADMIN_CLIENT_ORDERS_LOADED
+  ADMIN_CLIENT_ORDERS_LOADED,
 } from './types'
+
+export const setPageLoading = status => async dispatch => {
+  dispatch({
+    type: ADMIN_PAGE_SET_LOADING,
+    payload: status
+  })
+}
 
 export const getAdminClients = () => async dispatch => {
   const res = await api.get('/admin/getAdminClients')
@@ -73,12 +81,14 @@ export const getClientOrders = clientID => async dispatch => {
 }
 
 export const storeClientOrders = (clientID, orders) => async dispatch => {
+  dispatch(setPageLoading(true))
   const res = await api.post('/admin/storeClientOrders', { clientID, orders })
 
   if (res.data.success) {
     dispatch(getClientOrders(clientID))
     dispatch(setAlert('Orders Saved Successfully!', 'success'))
   }
+  dispatch(setPageLoading(false))
 }
 
 export const storeClientNotification = (clientID, notification) => async dispatch => {

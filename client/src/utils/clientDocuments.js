@@ -33,35 +33,35 @@ export const getDocumentList = client => {
     type: (client.einVerificationLetter.split('.').pop().toLowerCase() === 'png' || client.einVerificationLetter.split('.').pop().toLowerCase() === 'jpg' || client.einVerificationLetter.split('.').pop().toLowerCase() === 'jpeg') ? 'image' : 'document'
   })
   documents.push({ 
-    name: 'EIN Verification letter', 
+    name: 'Articles Of Organization', 
     path: fileUrl + client['articlesOfOrganization'], 
     keyInDB: 'articlesOfOrganization',
     status: client.articlesOfOrganizationStatus,
     type: (client.articlesOfOrganization.split('.').pop().toLowerCase() === 'png' || client.articlesOfOrganization.split('.').pop().toLowerCase() === 'jpg' || client.articlesOfOrganization.split('.').pop().toLowerCase() === 'jpeg') ? 'image' : 'document'
   })
   documents.push({ 
-    name: 'EIN Verification letter', 
+    name: 'Bank Card', 
     path: fileUrl + client['bankCard'], 
     keyInDB: 'bankCard',
     status: client.bankCardStatus,
     type: (client.bankCard.split('.').pop().toLowerCase() === 'png' || client.bankCard.split('.').pop().toLowerCase() === 'jpg' || client.bankCard.split('.').pop().toLowerCase() === 'jpeg') ? 'image' : 'document'
   })
   documents.push({ 
-    name: 'EIN Verification letter', 
+    name: 'US Drivers License', 
     path: fileUrl + client['usDriversLicense'], 
     keyInDB: 'usDriversLicense',
     status: client.usDriversLicenseStatus,
     type: (client.usDriversLicense.split('.').pop().toLowerCase() === 'png' || client.usDriversLicense.split('.').pop().toLowerCase() === 'jpg' || client.usDriversLicense.split('.').pop().toLowerCase() === 'jpeg') ? 'image' : 'document'
   })
   documents.push({ 
-    name: 'EIN Verification letter', 
+    name: 'Credit Debit Card Front', 
     path: fileUrl + client['creditDebitCardFront'], 
     keyInDB: 'creditDebitCardFront',
     status: client.creditDebitCardFrontStatus,
     type: (client.creditDebitCardFront.split('.').pop().toLowerCase() === 'png' || client.creditDebitCardFront.split('.').pop().toLowerCase() === 'jpg' || client.creditDebitCardFront.split('.').pop().toLowerCase() === 'jpeg') ? 'image' : 'document'
   })
   documents.push({ 
-    name: 'EIN Verification letter', 
+    name: 'Credit Debit Card Back', 
     path: fileUrl + client['creditDebitCardBack'], 
     keyInDB: 'creditDebitCardBack',
     status: client.creditDebitCardBackStatus,
