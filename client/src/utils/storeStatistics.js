@@ -32,6 +32,8 @@ export const totalNetProfit = orders => {
 }
 
 export const totalNetProfitChange = orders => {
+  if (totalNetProfit(ordersThisMonth(orders)) === 0) return 0
+
   var change = (1 - totalNetProfit(ordersLastMonth(orders)) / totalNetProfit(ordersThisMonth(orders))) * 100
   change = change.toFixed(2)
 
@@ -47,6 +49,8 @@ export const totalGrossProfit = orders => {
 }
 
 export const totalGrossProfitChange = orders => {
+  if (totalGrossProfit(ordersThisMonth(orders)) === 0) return 0
+ 
   var change = (1 - totalGrossProfit(ordersLastMonth(orders)) / totalGrossProfit(ordersThisMonth(orders))) * 100
   change = change.toFixed(2)
 
@@ -62,6 +66,8 @@ export const totalSales = orders => {
 }
 
 export const totalSalesChange = orders => {
+  if (totalSales(ordersThisMonth(orders)) === 0) return 0
+ 
   var change = (1 - totalSales(ordersLastMonth(orders)) / totalSales(ordersThisMonth(orders))) * 100
   change = change.toFixed(2)
 
