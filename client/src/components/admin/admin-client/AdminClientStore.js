@@ -122,20 +122,20 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                       <td>{index + 1}</td>
                       <td>{formatDateAndTimeInPDT(item.date)}</td>
                       <td>{item.product}</td>
-                      <td>{item.amazonSalePrice}</td>
-                      <td>{item.productCost}</td>
-                      <td>{item.shippingCost}</td>
-                      <td>{item.supplierTax}</td>
-                      <td>{item.grossProfit}</td>
-                      <td>{item.amazonFees}</td>
-                      <td>{item.netProfit}</td>
+                      <td>{item.amazonSalePrice.toFixed(2)}</td>
+                      <td>{item.productCost.toFixed(2)}</td>
+                      <td>{item.shippingCost.toFixed(2)}</td>
+                      <td>{item.supplierTax.toFixed(2)}</td>
+                      <td>{item.grossProfit.toFixed(2)}</td>
+                      <td>{item.amazonFees.toFixed(2)}</td>
+                      <td>{item.netProfit.toFixed(2)}</td>
                       <td>{item.shipStatus}</td>
                       <td>{item.refunded}</td>
                       <td>{item.shipperName}</td>
                       <td>{item.walmartOrder}</td>
                       <td>{item.amazonOrderID}</td>
                       <td>{item.notes}</td>
-                      <td>{item.amazonTax}</td>
+                      <td>{item.amazonTax.toFixed(2)}</td>
                       <td>
                         <button className='btn btn-sm border'>edit order</button>
                       </td>
