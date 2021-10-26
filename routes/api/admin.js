@@ -15,7 +15,15 @@ const Notification = require('../../models/Notification')
 const fileUpload = require('../../utils/fileUpload')
 
 router.get('/getAdminClients', async (req, res) => {
-  const clients = await User.find({ type: 'client' })
+  const clientsFromDB = await User.find({ type: 'client' })
+  var clients = []
+
+  for (var index = 0; index < clientsFromDB.length; index++) {
+    var client = clientsFromDB[index]._doc
+    var ordersByClient = await Order.find({client: client._id})
+    client['orders'] = ordersByClient
+    clients.push(client)
+  }
 
   res.json({
     success: true,

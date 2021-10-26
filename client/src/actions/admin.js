@@ -1,12 +1,20 @@
 import api from '../utils/api'
 import { setAlert } from './alert'
 import {
+  CURRENT_PAGE_SET,
   ADMIN_PAGE_SET_LOADING,
   ADMIN_CLIENTS_LOADED,
   ADMIN_CLEINT_LOADED,
   ADMIN_CLIENT_SET_CURRENT_PAGE,
   ADMIN_CLIENT_ORDERS_LOADED,
 } from './types'
+
+export const setCurrentPage = currentPage => async dispatch => {
+  dispatch({
+    type: CURRENT_PAGE_SET,
+    payload: currentPage
+  })
+}
 
 export const setPageLoading = status => async dispatch => {
   dispatch({

@@ -5,6 +5,7 @@ import { getClientOrders, storeClientOrders, storeClientNotification } from '../
 import { formatDateAndTimeInPDT } from '../../../utils/formatDate1'
 import { setAlert } from '../../../actions/alert'
 import Spinner from '../../layout/Spinner'
+import { totalNetProfit, totalNetProfitChange, totalGrossProfit, totalGrossProfitChange, totalSales, totalSalesChange } from '../../../utils/storeStatistics'
 
 const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, clientOrders, storeClientNotification, setAlert, isLoading }) => {
   React.useEffect(() => {
@@ -178,7 +179,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div className='h6'>Trending Item</div>
+                <div className='h6'>Store Status</div>
                 <div className='h5'>Really Good</div>
               </div>
             </div>
@@ -189,9 +190,14 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div>Trending Item</div>
-                <div className='h6'>Soccer Ball</div>
-                <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
+                <div>Net Profit</div>
+                <div className='h6'>$ {totalNetProfit(clientOrders)}</div>
+                {totalNetProfitChange(clientOrders) > 0
+                  ?
+                  <small className='text-success'><i className='fa fa-arrow-up'></i> {totalNetProfitChange(clientOrders)}% Since last month</small>
+                  :
+                  <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalNetProfitChange(clientOrders)}% Since last month</small>
+                }
               </div>
             </div>
           </div>
@@ -203,7 +209,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div>Most Sold Item</div>
+                <div>Trending Item</div>
                 <div className='h6'>Fishing Rod</div>
                 <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
               </div>
@@ -215,9 +221,14 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div>Total Sales</div>
-                <div className='h6'>$984K</div>
-                <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
+                <div>Gross Profit</div>
+                <div className='h6'>$ {totalGrossProfit(clientOrders)}</div>
+                {totalGrossProfitChange(clientOrders) > 0
+                  ?
+                  <small className='text-success'><i className='fa fa-arrow-up'></i> {totalGrossProfitChange(clientOrders)}% Since last month</small>
+                  :
+                  <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalGrossProfitChange(clientOrders)}% Since last month</small>
+                }
               </div>
             </div>
           </div>
@@ -229,8 +240,8 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div>Total Sales</div>
-                <div className='h6'>$15K</div>
+                <div>Most Sold Item</div>
+                <div className='h6'>Fishing Rod</div>
                 <small className='text-danger'><i className='fa fa-arrow-down text-danger'></i> 9% Since last month</small>
               </div>
             </div>
@@ -242,8 +253,13 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
               </div>
               <div className='ml-3'>
                 <div>Total Sales</div>
-                <div className='h6'>$15K</div>
-                <small className='text-danger'><i className='fa fa-arrow-down text-danger'></i> 9% Since last month</small>
+                <div className='h6'>$ {totalSales(clientOrders)}</div>
+                {totalSalesChange(clientOrders) > 0
+                  ?
+                  <small className='text-success'><i className='fa fa-arrow-up'></i> {totalSalesChange(clientOrders)}% Since last month</small>
+                  :
+                  <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalSalesChange(clientOrders)}% Since last month</small>
+                }
               </div>
             </div>
           </div>

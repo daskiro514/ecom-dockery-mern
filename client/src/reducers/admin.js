@@ -1,4 +1,5 @@
 import {
+  CURRENT_PAGE_SET,
   ADMIN_PAGE_SET_LOADING,
   ADMIN_CLIENTS_LOADED,
   ADMIN_CLEINT_LOADED,
@@ -7,6 +8,7 @@ import {
 } from '../actions/types'
 
 const initialState = {
+  currentPage: 'dashboard',
   isLoading: false,
   clients: [],
   adminClient: null,
@@ -18,6 +20,12 @@ const adminReducer = (state = initialState, action) => {
   const {type, payload} = action
 
   switch (type) {
+    case CURRENT_PAGE_SET: {
+      return {
+        ...state,
+        currentPage: payload
+      }
+    }
     case ADMIN_PAGE_SET_LOADING: 
       return {
         ...state,

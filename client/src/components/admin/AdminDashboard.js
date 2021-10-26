@@ -1,8 +1,17 @@
 import React from 'react'
-import userAvatar from '../../img/common/userAvatar.png'
-import earning from '../../img/common/earning.png'
+import { connect } from 'react-redux'
+import Chart from 'react-apexcharts'
+import { getAdminClients, goPage } from '../../actions/admin'
+import { useHistory } from 'react-router'
+import { totalNetProfit, totalGrossProfit, totalSales, totalSalesChange } from '../../utils/storeStatistics'
+import { getAdminChartOptions, getAdminChartSeries } from '../../utils/adminChart'
 
-const AdminDashboard = () => {
+const AdminDashboard = ({ getAdminClients, clients, goPage }) => {
+  const history = useHistory()
+
+  React.useEffect(() => {
+    getAdminClients()
+  }, [getAdminClients])
 
   return (
     <div className='admin-dashboard'>
@@ -21,15 +30,15 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className='px-2 h5'>
-              Customer List
+              Client List
             </div>
             <div className='p-2'>
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((item, index) =>
-                <div key={index} className='d-flex align-items-center pb-2'>
-                  <img src={userAvatar} alt='userAvatar' className='rounded-circle mr-2' width='40px' />
+              {clients.map((item, index) =>
+                <div key={index} onClick={() => goPage(history, `client/${item._id}`)} className='d-flex align-items-center p-1 rounded mb-1 link-item'>
+                  <img src={item.avatar} alt='userAvatar' className='rounded-circle mr-2' width='40px' />
                   <div style={{ lineHeight: '1' }}>
-                    <div>Annette Black</div>
-                    <small className='text-muted'>Annette@gmail.com</small>
+                    <div>{`${item.firstName} ${item.lastName}`}</div>
+                    <small className='text-muted text-break'>{item.email}</small>
                   </div>
                 </div>
               )}
@@ -37,48 +46,49 @@ const AdminDashboard = () => {
           </div>
         </div>
         <div className='col-lg-9'>
-          <div className='bg-white m-1 mb-4 rounded-lg p-3'>
-            <img src={earning} alt='EARNING' className='img-fluid' />
+          <div className='bg-white m-1 mb-4 rounded-lg p-3 mixed-chart'>
+            <h3 className='ml-3'>$ 500</h3>
+            <Chart
+              options={getAdminChartOptions()}
+              series={getAdminChartSeries(clients)}
+              type='area'
+              height='300px'
+              width='100%'
+            />
           </div>
           <div className='bg-white m-1 mb-4 rounded-lg'>
             <div className='p-3 h5'>
-              Customer Store Statistics
+              Client Store Statistics
             </div>
+
             <div className='p-2'>
               <div className='table-responsive table-customer-store-statistics'>
                 <table className='table table-borderless'>
                   <thead>
                     <tr>
-                      <th>Product Name</th>
-                      <th>Sales</th>
-                      <th>Record Point</th>
-                      <th>Stock</th>
-                      <th>Amount</th>
+                      <th>Client Name</th>
+                      <th>Net Profit</th>
+                      <th>Gross Profit</th>
+                      <th>Total # Sales</th>
+                      <th>Total Sales</th>
                       <th>Store Status</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {[1, 2, 3, 4].map((item, index) =>
+                    {clients.map((item, index) =>
                       <tr key={index} className='table-row-customer-store-statistics-round'>
-                        <td>Joe Frank</td>
-                        <td>854</td>
-                        <td>08</td>
-                        <td>447</td>
-                        <td>$252.01</td>
+                        <td>{`${item.firstName} ${item.lastName}`}</td>
+                        <td>$ {totalNetProfit(item.orders)}</td>
+                        <td>$ {totalGrossProfit(item.orders)}</td>
+                        <td>{item.orders.length}</td>
+                        <td>$ {totalSales(item.orders)}</td>
                         <td className='have-length'>
-                          <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
-                        </td>
-                      </tr>
-                    )}
-                    {[1, 2, 3, 4].map((item, index) =>
-                      <tr key={index + 10} className='table-row-customer-store-statistics-round'>
-                        <td>Sandy White</td>
-                        <td>32</td>
-                        <td>02</td>
-                        <td>31</td>
-                        <td>$36.07</td>
-                        <td className='have-length'>
-                          <small className='text-danger'><i className='fa fa-arrow-down text-danger'></i> 9% Since last month</small>
+                          {totalSalesChange(item.orders) > 0
+                            ?
+                            <small className='text-success'><i className='fa fa-arrow-up'></i> {totalSalesChange(item.orders)}% Since last month</small>
+                            :
+                            <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalSalesChange(item.orders)}% Since last month</small>
+                          }
                         </td>
                       </tr>
                     )}
@@ -93,4 +103,8 @@ const AdminDashboard = () => {
   )
 }
 
-export default AdminDashboard
+const mapStateToProps = state => ({
+  clients: state.admin.clients
+})
+
+export default connect(mapStateToProps, { getAdminClients, goPage })(AdminDashboard)

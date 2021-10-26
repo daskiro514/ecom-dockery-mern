@@ -7,7 +7,8 @@
   min-height: 100vh;
 }
 
-.bg-admin .sidebar .menuItem {
+.bg-admin .sidebar .menuItem:hover {
+  background-color: rgba(110, 15, 125, 0.1);
   cursor: pointer;
 }
 
@@ -25,10 +26,6 @@
     margin-top: 30px;
     margin-bottom: 10px;
   }
-}
-
-.bg-admin .admin-dashboard i {
-  color: #837185;
 }
 
 .bg-admin .admin-dashboard .table-customer-store-statistics table tr th {
@@ -214,4 +211,13 @@ a {
 
 .min-width-2 {
   min-width: 250px;
+}
+
+.link-item:hover {
+  background-color: rgba(110, 15, 125, 0.1);
+  cursor: pointer;
+}
+
+.selected {
+  background-color: rgba(110, 15, 125, 0.1);
 }
