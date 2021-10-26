@@ -12,6 +12,18 @@ export const getMonthlyLandmarks = () => {
   return monthlyLandmarks
 }
 
+export const getTotalSales = clients => {
+  var orders = []
+
+  clients.forEach(client => {
+    client.orders.forEach(order => {
+      orders.push(order)
+    })
+  })
+
+  return totalSales(orders)
+}
+
 export const getAdminChartOptions = () => {
   var categories = []
   var monthlyLandmarks = getMonthlyLandmarks()

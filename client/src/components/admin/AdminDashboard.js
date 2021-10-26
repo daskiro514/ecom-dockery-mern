@@ -4,7 +4,7 @@ import Chart from 'react-apexcharts'
 import { getAdminClients, goPage } from '../../actions/admin'
 import { useHistory } from 'react-router'
 import { totalNetProfit, totalGrossProfit, totalSales, totalSalesChange } from '../../utils/storeStatistics'
-import { getAdminChartOptions, getAdminChartSeries } from '../../utils/adminChart'
+import { getTotalSales, getAdminChartOptions, getAdminChartSeries } from '../../utils/adminChart'
 
 const AdminDashboard = ({ getAdminClients, clients, goPage }) => {
   const history = useHistory()
@@ -47,7 +47,7 @@ const AdminDashboard = ({ getAdminClients, clients, goPage }) => {
         </div>
         <div className='col-lg-9'>
           <div className='bg-white m-1 mb-4 rounded-lg p-3 mixed-chart'>
-            <h3 className='ml-3'>$ 500</h3>
+            <h3 className='ml-3'>$ {getTotalSales(clients).toFixed(2)}</h3>
             <Chart
               options={getAdminChartOptions()}
               series={getAdminChartSeries(clients)}
