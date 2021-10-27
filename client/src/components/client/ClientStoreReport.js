@@ -112,7 +112,7 @@ const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, getNotific
                       <td>{item.shippingCost.toFixed(2)}</td>
                       <td>{item.supplierTax.toFixed(2)}</td>
                       <td>{item.grossProfit.toFixed(2)}</td>
-                      <td>{item.amazonFees}</td>
+                      <td>{item.amazonFees.toFixed(2)}</td>
                     </tr>
                   )}
                 </tbody>
