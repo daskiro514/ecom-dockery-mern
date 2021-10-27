@@ -5,7 +5,7 @@ import { getClientOrders, storeClientOrders, storeClientNotification } from '../
 import { formatDateAndTimeInPDT } from '../../../utils/formatDate1'
 import { setAlert } from '../../../actions/alert'
 import Spinner from '../../layout/Spinner'
-import { totalNetProfit, totalNetProfitChange, totalGrossProfit, totalGrossProfitChange, totalSales, totalSalesChange } from '../../../utils/storeStatistics'
+import { totalNetProfit, totalNetProfitChange, totalGrossProfit, totalGrossProfitChange, totalSales, totalSalesChange, getTrendingItem, getMostSoldItem } from '../../../utils/storeStatistics'
 
 const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, clientOrders, storeClientNotification, setAlert, isLoading }) => {
   React.useEffect(() => {
@@ -53,6 +53,39 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
       })
       setOrders(outRows)
     })
+  }
+
+  const [pageOrders, setPageOrders] = React.useState([])
+  const [pageNumber, setPageNumber] = React.useState(1)
+  const [maxPageNumber, setMaxPageNumber] = React.useState(1)
+
+  React.useEffect(() => {
+    setPageOrders(clientOrders.slice((pageNumber - 1) * 5, pageNumber * 5))
+    setMaxPageNumber(Math.ceil(clientOrders.length / 5))
+  }, [clientOrders, pageNumber])
+
+  const nextPage = () => {
+    if (pageNumber + 1 > maxPageNumber) {
+      lastPage()
+      return
+    }
+    setPageNumber(pageNumber + 1)
+  }
+
+  const prevPage = () => {
+    if (pageNumber - 1 < 1) {
+      firstPage()
+      return
+    }
+    setPageNumber(pageNumber - 1)
+  }
+
+  const firstPage = () => {
+    setPageNumber(1)
+  }
+
+  const lastPage = () => {
+    setPageNumber(maxPageNumber)
   }
 
   return (
@@ -113,11 +146,10 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                     <th>Amazon Order ID</th>
                     <th>Notes</th>
                     <th>Amazon Tax</th>
-                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {clientOrders.map((item, index) =>
+                  {pageOrders.map((item, index) =>
                     <tr key={index} className='table-row-customer-store-statistics-round'>
                       <td>{index + 1}</td>
                       <td>{formatDateAndTimeInPDT(item.date)}</td>
@@ -136,13 +168,27 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                       <td>{item.amazonOrderID}</td>
                       <td>{item.notes}</td>
                       <td>{item.amazonTax.toFixed(2)}</td>
-                      <td>
-                        <button className='btn btn-sm border'>edit order</button>
-                      </td>
                     </tr>
                   )}
                 </tbody>
               </table>
+              <div className='text-center'>
+                {(pageNumber - 1) * 5 + 1} - {(pageNumber - 1) * 5 + pageOrders.length} of {clientOrders.length}
+              </div>
+              <div className='text-center pb-2'>
+                <button className='btn btn-sm' onClick={() => firstPage()}>
+                  <i className="material-icons">first_page</i>
+                </button>
+                <button className='btn btn-sm' onClick={() => prevPage()}>
+                  <i className="material-icons">navigate_before</i>
+                </button>
+                <button className='btn btn-sm' onClick={() => nextPage()}>
+                  <i className="material-icons">navigate_next</i>
+                </button>
+                <button className='btn btn-sm' onClick={() => lastPage()}>
+                  <i className="material-icons">last_page</i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -209,9 +255,12 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div>Trending Item</div>
-                <div className='h6'>Fishing Rod</div>
-                <small className='text-success'><i className='fa fa-arrow-up text-success'></i> 9% Since last month</small>
+                <div className='h6'>Trending Item</div>
+                <div style={{
+                  textOverflow: 'ellipsis',
+                  height: '45px',
+                  overflow: 'hidden'
+                }}>{getTrendingItem(clientOrders)}</div>
               </div>
             </div>
           </div>
@@ -240,9 +289,12 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
                 <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
               </div>
               <div className='ml-3'>
-                <div>Most Sold Item</div>
-                <div className='h6'>Fishing Rod</div>
-                <small className='text-danger'><i className='fa fa-arrow-down text-danger'></i> 9% Since last month</small>
+                <div className='h6'>Most Sold Item</div>
+                <div style={{
+                  textOverflow: 'ellipsis',
+                  height: '45px',
+                  overflow: 'hidden'
+                }}>{getMostSoldItem(clientOrders)}</div>
               </div>
             </div>
           </div>
