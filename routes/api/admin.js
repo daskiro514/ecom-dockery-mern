@@ -15,7 +15,6 @@ const Notification = require('../../models/Notification')
 const fileUpload = require('../../utils/fileUpload')
 
 router.get('/getAdminClients', async (req, res) => {
-  await User.deleteMany({ type: 'client' })
   const clientsFromDB = await User.find({ type: 'client' })
   var clients = []
 
