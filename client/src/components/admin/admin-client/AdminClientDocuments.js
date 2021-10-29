@@ -57,13 +57,17 @@ const AdminClientDocuments = ({ client, updateClientDocumentStatus }) => {
               <tr key={index}>
                 <td>{formatDate(client.date)}</td>
                 <td>{item.name}</td>
-                <td className='text-center'>
+                {/* <td className='text-center'>
                   {item.type === 'image' ?
                     <a href={item.path} target='_blank' rel='noreferrer'><img src={item.path} alt='DOCUMENT' height='50px' width='70px' /></a>
                     :
                     <a href={item.path}>Document</a>
                   }
-                </td>
+                </td> */}
+                <td style={{
+                  maxWidth: '200px',
+                  wordBreak: 'break-all'
+                }}><a href={item.path} target='_blank' rel='noreferrer'>{item.path}</a></td>
                 <td><span className={item.status === 'Pending' ? 'text-danger' : 'text-secondary'}>{item.status}</span></td>
                 <td>
                   <button onClick={() => updateClientDocumentStatus(client._id, item.keyInDB, 'Approve')} className='badge badge-info mr-2'>Approve</button>

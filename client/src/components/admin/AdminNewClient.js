@@ -19,15 +19,22 @@ const AddNewClient = ({ addNewClient }) => {
     emailForStore: '',
     password: '',
     phoneNumber: '',
-    w9: null,
-    einVerificationLetter: null,
-    articlesOfOrganization: null,
-    bankCard: null,
-    usDriversLicense: null,
+    // w9: null,
+    // einVerificationLetter: null,
+    // articlesOfOrganization: null,
+    // bankCard: null,
+    // usDriversLicense: null,
+    // creditDebitCardFront: null,
+    // creditDebitCardBack: null,
+    w9: '',
+    einVerificationLetter: '',
+    articlesOfOrganization: '',
+    bankCard: '',
+    usDriversLicense: '',
+    creditDebitCardFront: '',
+    creditDebitCardBack: '',
     bankAccount: '',
     routing: '',
-    creditDebitCardFront: null,
-    creditDebitCardBack: null,
     dunsNumber: '',
     website: '',
     amazonSellerName: '',
@@ -36,17 +43,17 @@ const AddNewClient = ({ addNewClient }) => {
 
   const { firstName, lastName, email, dateOfBirth, usBusinessTaxID, usBusineesAddress, emailForStore, password, phoneNumber, w9, einVerificationLetter, articlesOfOrganization, bankCard, usDriversLicense, bankAccount, routing, creditDebitCardFront, creditDebitCardBack, dunsNumber, website, amazonSellerName, amazonStoreUrl } = formData
 
-  const fileInputW9Ref = React.useRef()
-  const fileInputeinVerificationLetterRef = React.useRef()
-  const fileInputarticlesOfOrganizationRef = React.useRef()
-  const fileInputBankCardRef = React.useRef()
-  const fileInputusDriversLicenseRef = React.useRef()
-  const fileInputcreditDebitCardFrontRef = React.useRef()
-  const fileInputcreditDebitCardBackRef = React.useRef()
+  // const fileInputW9Ref = React.useRef()
+  // const fileInputeinVerificationLetterRef = React.useRef()
+  // const fileInputarticlesOfOrganizationRef = React.useRef()
+  // const fileInputBankCardRef = React.useRef()
+  // const fileInputusDriversLicenseRef = React.useRef()
+  // const fileInputcreditDebitCardFrontRef = React.useRef()
+  // const fileInputcreditDebitCardBackRef = React.useRef()
 
-  const onFileChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.files[0] })
-  }
+  // const onFileChange = e => {
+  //   setFormData({ ...formData, [e.target.name]: e.target.files[0] })
+  // }
 
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -55,11 +62,11 @@ const AddNewClient = ({ addNewClient }) => {
   const onSubmit = e => {
     e.preventDefault()
     setIsUploading(true)
-    let sendData = new FormData()
-    Object.keys(formData).forEach(key => {
-      sendData.append(key, formData[key])
-    })
-    addNewClient(sendData, history)
+    // let sendData = new FormData()
+    // Object.keys(formData).forEach(key => {
+    //   sendData.append(key, formData[key])
+    // })
+    addNewClient(formData, history)
   }
 
   return (
@@ -177,8 +184,16 @@ const AddNewClient = ({ addNewClient }) => {
                   />
                 </div>
                 <div className='form-group'>
-                  <label>W8 or W9 *</label>
+                  <label>W8 or W9 (Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='w9'
+                    value={w9}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (w9 ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputW9Ref.current.click()}
@@ -191,11 +206,19 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputW9Ref}
                     required
-                  />
+                  /> */}
                 </div>
-                <div className='form-group fileInputDiv'>
-                  <label>EIN Verification letter from the Department of Treasury. *</label>
+                <div className='form-group'>
+                  <label>EIN Verification letter from the Department of Treasury(Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='einVerificationLetter'
+                    value={einVerificationLetter}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (einVerificationLetter ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputeinVerificationLetterRef.current.click()}
@@ -208,14 +231,22 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputeinVerificationLetterRef}
                     required
-                  />
+                  /> */}
                 </div>
 
               </div>
               <div className='col-md-6'>
                 <div className='form-group'>
-                  <label>Articles Of Organization *</label>
+                  <label>Articles Of Organization(Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='articlesOfOrganization'
+                    value={articlesOfOrganization}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (articlesOfOrganization ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputarticlesOfOrganizationRef.current.click()}
@@ -228,11 +259,19 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputarticlesOfOrganizationRef}
                     required
-                  />
+                  /> */}
                 </div>
-                <div className='form-group fileInputDiv'>
-                  <label>Bank/Credit Card Statement</label>
+                <div className='form-group'>
+                  <label>Bank/Credit Card Statement(Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='bankCard'
+                    value={bankCard}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (bankCard ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputBankCardRef.current.click()}
@@ -245,11 +284,19 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputBankCardRef}
                     required
-                  />
+                  /> */}
                 </div>
-                <div className='form-group fileInputDiv'>
-                  <label>U.S Drivers License Front & Back</label>
+                <div className='form-group'>
+                  <label>U.S Drivers License Front & Back(Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='usDriversLicense'
+                    value={usDriversLicense}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (usDriversLicense ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputusDriversLicenseRef.current.click()}
@@ -262,9 +309,9 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputusDriversLicenseRef}
                     required
-                  />
+                  /> */}
                 </div>
-                <div className='form-group fileInputDiv'>
+                <div className='form-group'>
                   <label>Bank Account # *</label>
                   <input
                     type='text'
@@ -287,8 +334,16 @@ const AddNewClient = ({ addNewClient }) => {
                   />
                 </div>
                 <div className='form-group'>
-                  <label>Credit/Debit Card (Front) *</label>
+                  <label>Credit/Debit Card (Front) (Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='creditDebitCardFront'
+                    value={creditDebitCardFront}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (creditDebitCardFront ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputcreditDebitCardFrontRef.current.click()}
@@ -301,11 +356,19 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputcreditDebitCardFrontRef}
                     required
-                  />
+                  /> */}
                 </div>
-                <div className='form-group fileInputDiv'>
-                  <label>Credit/Debit Card (Back) *</label>
+                <div className='form-group'>
+                  <label>Credit/Debit Card (Back) (Google Drive Link)</label>
                   <input
+                    type='text'
+                    className='form-control'
+                    name='creditDebitCardBack'
+                    value={creditDebitCardBack}
+                    onChange={onChange}
+                    required
+                  />
+                  {/* <input
                     type='button'
                     className={'form-control ' + (creditDebitCardBack ? 'text-success' : 'text-danger')}
                     onClick={() => fileInputcreditDebitCardBackRef.current.click()}
@@ -318,9 +381,9 @@ const AddNewClient = ({ addNewClient }) => {
                     onChange={onFileChange}
                     ref={fileInputcreditDebitCardBackRef}
                     required
-                  />
+                  /> */}
                 </div>
-                <div className='form-group fileInputDiv'>
+                <div className='form-group'>
                   <label>DUNS Number</label>
                   <input
                     type='text'

@@ -17,15 +17,15 @@ const Register = ({ register }) => {
     emailForStore: '',
     password: '',
     phoneNumber: '',
-    w9: null,
-    einVerificationLetter: null,
-    articlesOfOrganization: null,
-    bankCard: null,
-    usDriversLicense: null,
+    w9: '',
+    einVerificationLetter: '',
+    articlesOfOrganization: '',
+    bankCard: '',
+    usDriversLicense: '',
+    creditDebitCardFront: '',
+    creditDebitCardBack: '',
     bankAccount: '',
     routing: '',
-    creditDebitCardFront: null,
-    creditDebitCardBack: null,
     dunsNumber: '',
     website: '',
     amazonSellerName: '',
@@ -34,29 +34,13 @@ const Register = ({ register }) => {
 
   const { firstName, lastName, email, dateOfBirth, usBusinessTaxID, usBusineesAddress, emailForStore, password, phoneNumber, w9, einVerificationLetter, articlesOfOrganization, bankCard, usDriversLicense, bankAccount, routing, creditDebitCardFront, creditDebitCardBack, dunsNumber, website, amazonSellerName, amazonStoreUrl } = formData
 
-  const fileInputW9Ref = React.useRef()
-  const fileInputeinVerificationLetterRef = React.useRef()
-  const fileInputarticlesOfOrganizationRef = React.useRef()
-  const fileInputBankCardRef = React.useRef()
-  const fileInputusDriversLicenseRef = React.useRef()
-  const fileInputcreditDebitCardFrontRef = React.useRef()
-  const fileInputcreditDebitCardBackRef = React.useRef()
-
-  const onFileChange = e => {
-    setFormData({ ...formData, [e.target.name]: e.target.files[0] })
-  }
-
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const onSubmit = e => {
     e.preventDefault()
-    let sendData = new FormData()
-    Object.keys(formData).forEach(key => {
-      sendData.append(key, formData[key])
-    })
-    register(sendData, history)
+    register(formData, history)
   }
 
   return (
@@ -136,7 +120,7 @@ const Register = ({ register }) => {
                     <div className='form-group'>
                       <label>Business Email *</label>
                       <input
-                        type='text'
+                        type='email'
                         className='form-control'
                         name='email'
                         value={email}
@@ -213,94 +197,63 @@ const Register = ({ register }) => {
                       />
                     </div>
                     <div className='form-group'>
-                      <label>W8 or W9 *</label>
+                      <label>W8 or W9 (Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (w9 ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputW9Ref.current.click()}
-                        value={w9 ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='w9'
-                        onChange={onFileChange}
-                        ref={fileInputW9Ref}
+                        value={w9}
+                        onChange={onChange}
                         required
                       />
                     </div>
-                    <div className='form-group fileInputDiv'>
-                      <label>EIN Verification letter from the Department of Treasury. *</label>
+                    <div className='form-group'>
+                      <label>EIN Verification letter from the Department of Treasury(Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (einVerificationLetter ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputeinVerificationLetterRef.current.click()}
-                        value={einVerificationLetter ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='einVerificationLetter'
-                        onChange={onFileChange}
-                        ref={fileInputeinVerificationLetterRef}
+                        value={einVerificationLetter}
+                        onChange={onChange}
                         required
                       />
                     </div>
-
                   </div>
                   <div className='col-md-6'>
                     <div className='form-group'>
-                      <label>Articles Of Organization *</label>
+                      <label>Articles Of Organization(Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (articlesOfOrganization ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputarticlesOfOrganizationRef.current.click()}
-                        value={articlesOfOrganization ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='articlesOfOrganization'
-                        onChange={onFileChange}
-                        ref={fileInputarticlesOfOrganizationRef}
+                        value={articlesOfOrganization}
+                        onChange={onChange}
                         required
                       />
                     </div>
-                    <div className='form-group fileInputDiv'>
-                      <label>Bank/Credit Card Statement</label>
+                    <div className='form-group'>
+                      <label>Bank/Credit Card Statement(Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (bankCard ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputBankCardRef.current.click()}
-                        value={bankCard ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='bankCard'
-                        onChange={onFileChange}
-                        ref={fileInputBankCardRef}
+                        value={bankCard}
+                        onChange={onChange}
                         required
                       />
                     </div>
-                    <div className='form-group fileInputDiv'>
-                      <label>U.S Drivers License Front & Back</label>
+                    <div className='form-group'>
+                      <label>U.S Drivers License Front & Back(Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (usDriversLicense ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputusDriversLicenseRef.current.click()}
-                        value={usDriversLicense ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='usDriversLicense'
-                        onChange={onFileChange}
-                        ref={fileInputusDriversLicenseRef}
+                        value={usDriversLicense}
+                        onChange={onChange}
                         required
                       />
                     </div>
-                    <div className='form-group fileInputDiv'>
+                    <div className='form-group'>
                       <label>Bank Account # *</label>
                       <input
                         type='text'
@@ -323,40 +276,28 @@ const Register = ({ register }) => {
                       />
                     </div>
                     <div className='form-group'>
-                      <label>Credit/Debit Card (Front) *</label>
+                      <label>Credit/Debit Card (Front) (Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (creditDebitCardFront ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputcreditDebitCardFrontRef.current.click()}
-                        value={creditDebitCardFront ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='creditDebitCardFront'
-                        onChange={onFileChange}
-                        ref={fileInputcreditDebitCardFrontRef}
+                        value={creditDebitCardFront}
+                        onChange={onChange}
                         required
                       />
                     </div>
-                    <div className='form-group fileInputDiv'>
-                      <label>Credit/Debit Card (Back) *</label>
+                    <div className='form-group'>
+                      <label>Credit/Debit Card (Back) (Google Drive Link)</label>
                       <input
-                        type='button'
-                        className={'form-control ' + (creditDebitCardBack ? 'text-success' : 'text-danger')}
-                        onClick={() => fileInputcreditDebitCardBackRef.current.click()}
-                        value={creditDebitCardBack ? 'Document Selected' : 'Upload Document'}
-                      />
-                      <input
-                        type='file'
-                        className='file'
+                        type='text'
+                        className='form-control'
                         name='creditDebitCardBack'
-                        onChange={onFileChange}
-                        ref={fileInputcreditDebitCardBackRef}
+                        value={creditDebitCardBack}
+                        onChange={onChange}
                         required
                       />
                     </div>
-                    <div className='form-group fileInputDiv'>
+                    <div className='form-group'>
                       <label>DUNS Number</label>
                       <input
                         type='text'
