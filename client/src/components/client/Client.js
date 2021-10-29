@@ -17,9 +17,9 @@ const Client = () => {
         <div className='col-lg-10 col-md-8 p-3'>
           <ClientHeader />
           <Router basename="/dashboard">
-            <PrivateRoute exact path="/" component={ClientAccount} />
+            <PrivateRoute exact path="/" component={ClientStoreReport} />
+            <PrivateRoute exact path="/account" component={ClientAccount} />
             <PrivateRoute exact path="/store-manage" component={ClientStoreManagement} />
-            <PrivateRoute exact path="/store-report" component={ClientStoreReport} />
             <PrivateRoute exact path="/settings" component={ClientSettings} />
           </Router>
         </div>

@@ -29,20 +29,20 @@ const ClientSidebar = ({ logout }) => {
         </div>
         <div className='row mx-1 h5 menuItem' onClick={() => goPage('')}>
           <div className='d-flex align-items-center'>
+            <i className='fa fa-map-pin pt-2 mr-2 pr-1 h6'></i>
+            <span>Store Report</span>
+          </div>
+        </div>
+        <div className='row mx-1 h5 menuItem' onClick={() => goPage('account')}>
+          <div className='d-flex align-items-center'>
             <i className='fa fa-database pt-2 mr-2 h6'></i>
             <span>My Account</span>
           </div>
         </div>
-        <div className='row mx-1 h5 menuItem' onClick={() => goPage('store-manage')}>
+        {/* <div className='row mx-1 h5 menuItem' onClick={() => goPage('store-manage')}>
           <div className='d-flex align-items-center'>
             <i className='fa fa-map-pin pt-2 mr-2 pr-1 h6'></i>
             <span>Store Management</span>
-          </div>
-        </div>
-        <div className='row mx-1 h5 menuItem' onClick={() => goPage('store-report')}>
-          <div className='d-flex align-items-center'>
-            <i className='fa fa-map-pin pt-2 mr-2 pr-1 h6'></i>
-            <span>Store Report</span>
           </div>
         </div>
         <div className='row mx-1 h5 menuItem' onClick={() => goPage('settings')}>
@@ -50,7 +50,7 @@ const ClientSidebar = ({ logout }) => {
             <i className='fa fa-clock-o pt-2 mr-2 h6'></i>
             <span>Settings</span>
           </div>
-        </div>
+        </div> */}
         <div className='row mx-1 h5 menuItem signoutLink' onClick={logout}>
           <i className='fa fa-sign-out pt-2 mr-1 h6'></i>
           <span className='pt-1'>Sign Out</span>

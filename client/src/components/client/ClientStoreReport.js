@@ -5,6 +5,7 @@ import Chart from 'react-apexcharts'
 import { getTotalSales, getClientChartOptions, getClientChartSeries } from '../../utils/clientCharts'
 import { getNotifications } from '../../actions/client'
 import { formatDateAndTimeInPDT, formatDate } from '../../utils/formatDate1'
+import { totalNetProfit, totalNetProfitChange, totalGrossProfit, totalGrossProfitChange, totalSales, totalSalesChange, getTrendingItem, getMostSoldItem } from '../../utils/storeStatistics'
 
 const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, getNotifications, notifications }) => {
   React.useEffect(() => {
@@ -133,6 +134,107 @@ const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, getNotific
                 <button className='btn btn-sm' onClick={() => lastPage()}>
                   <i className="material-icons">last_page</i>
                 </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className='col-lg-4'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <div className='border border-4 border-light-green rounded-circle text-center mr-2 p-2'>
+                <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
+              </div>
+              <div className='ml-3'>
+                <div className='h6'>Store Status</div>
+                <div className='h5'>Really Good</div>
+              </div>
+            </div>
+          </div>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
+                <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
+              </div>
+              <div className='ml-3'>
+                <div>Net Profit</div>
+                <div className='h6'>$ {totalNetProfit(clientOrders)}</div>
+                {totalNetProfitChange(clientOrders) > 0
+                  ?
+                  <small className='text-success'><i className='fa fa-arrow-up'></i> {totalNetProfitChange(clientOrders)}% Since last month</small>
+                  :
+                  <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalNetProfitChange(clientOrders)}% Since last month</small>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='col-lg-4'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
+                <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
+              </div>
+              <div className='ml-3'>
+                <div className='h6'>Trending Item</div>
+                <div style={{
+                  textOverflow: 'ellipsis',
+                  height: '45px',
+                  overflow: 'hidden'
+                }}>{getTrendingItem(clientOrders)}</div>
+              </div>
+            </div>
+          </div>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
+                <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
+              </div>
+              <div className='ml-3'>
+                <div>Gross Profit</div>
+                <div className='h6'>$ {totalGrossProfit(clientOrders)}</div>
+                {totalGrossProfitChange(clientOrders) > 0
+                  ?
+                  <small className='text-success'><i className='fa fa-arrow-up'></i> {totalGrossProfitChange(clientOrders)}% Since last month</small>
+                  :
+                  <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalGrossProfitChange(clientOrders)}% Since last month</small>
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='col-lg-4'>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
+                <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
+              </div>
+              <div className='ml-3'>
+                <div className='h6'>Most Sold Item</div>
+                <div style={{
+                  textOverflow: 'ellipsis',
+                  height: '45px',
+                  overflow: 'hidden'
+                }}>{getMostSoldItem(clientOrders)}</div>
+              </div>
+            </div>
+          </div>
+          <div className='p-3 bg-white rounded-lg mt-3'>
+            <div className='d-flex justify-content-center align-items-center'>
+              <div className='border rounded-circle text-center mr-2 p-2'>
+                <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
+              </div>
+              <div className='ml-3'>
+                <div>Total Sales</div>
+                <div className='h6'>$ {totalSales(clientOrders)}</div>
+                {totalSalesChange(clientOrders) > 0
+                  ?
+                  <small className='text-success'><i className='fa fa-arrow-up'></i> {totalSalesChange(clientOrders)}% Since last month</small>
+                  :
+                  <small className='text-danger'><i className='fa fa-arrow-down'></i> {totalSalesChange(clientOrders)}% Since last month</small>
+                }
               </div>
             </div>
           </div>
