@@ -63,13 +63,10 @@ const ClientAccount = ({ client }) => {
                 <tr key={index}>
                   <td>{formatDate(client.date)}</td>
                   <td>{item.name}</td>
-                  <td className='text-center'>
-                    {item.type === 'image' ?
-                      <a href={item.path} target='_blank' rel='noreferrer'><img src={item.path} alt='DOCUMENT' height='50px' width='70px' /></a>
-                      :
-                      <a href={item.path}>Document</a>
-                    }
-                  </td>
+                  <td style={{
+                    maxWidth: '200px',
+                    wordBreak: 'break-all'
+                  }}><a href={item.path} target='_blank' rel='noreferrer'>{item.path}</a></td>
                   <td><span className={item.status === 'Pending' ? 'text-danger' : 'text-secondary'}>{item.status}</span></td>
                 </tr>
               )}
