@@ -10,6 +10,7 @@ import AdminSettings from './AdminSettings'
 import AdminHeader from './AdminHeader'
 import AdminEducation from './AdminEducation'
 import AdminEducationCreate from './AdminEducationCreate'
+import AdminEducationEdit from './AdminEducationEdit'
 
 const Admin = () => {
 
@@ -27,6 +28,7 @@ const Admin = () => {
             <PrivateRoute exact path="/settings" component={AdminSettings} />
             <PrivateRoute exact path="/education" component={AdminEducation} />
             <PrivateRoute exact path="/education/create" component={AdminEducationCreate} />
+            <PrivateRoute exact path="/education/edit/:id" component={AdminEducationEdit} />
           </Router>
         </div>
       </div>

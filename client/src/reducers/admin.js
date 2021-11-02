@@ -5,7 +5,8 @@ import {
   ADMIN_CLEINT_LOADED,
   ADMIN_CLIENT_SET_CURRENT_PAGE,
   ADMIN_CLIENT_ORDERS_LOADED,
-  COURSES_LOADED
+  COURSES_LOADED,
+  COURSE_LOADED
 } from '../actions/types'
 
 const initialState = {
@@ -15,7 +16,12 @@ const initialState = {
   adminClient: null,
   adminClientCurrentPage: 'document',
   adminClientOrders: [],
-  courses: []
+  courses: [],
+  course: {
+    title: '',
+    description: '',
+    video: ''
+  }
 }
 
 const adminReducer = (state = initialState, action) => {
@@ -57,6 +63,11 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         courses: payload
+      }
+    case COURSE_LOADED:
+      return {
+        ...state,
+        course: payload
       }
     default:
       return state

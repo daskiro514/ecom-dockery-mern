@@ -7,7 +7,8 @@ import {
   ADMIN_CLEINT_LOADED,
   ADMIN_CLIENT_SET_CURRENT_PAGE,
   ADMIN_CLIENT_ORDERS_LOADED,
-  COURSES_LOADED
+  COURSES_LOADED,
+  COURSE_LOADED
 } from './types'
 
 export const setCurrentPage = currentPage => async dispatch => {
@@ -126,5 +127,36 @@ export const getCourses = () => async dispatch => {
       type: COURSES_LOADED,
       payload: res.data.courses
     })
+  }
+}
+
+export const getCourseByID = courseID => async dispatch => {
+  const res = await api.get(`/admin/getCourse/${courseID}`)
+
+  if (res.data.success) {
+    dispatch({
+      type: COURSE_LOADED,
+      payload: res.data.course
+    })
+  }
+}
+
+export const updateCourse = (history, courseID, formData) => async dispatch => {
+  const res = await api.post(`/admin/updateCourse/${courseID}`, formData)
+
+  if (res.data.success) {
+    dispatch(getCourses())
+    dispatch(setAlert('Course Is Updated Successfully!', 'success'))
+    dispatch(goPage(history, 'education'))
+  }
+}
+
+export const deleteCourse = (history, courseID) => async dispatch => {
+  const res = await api.delete(`/admin/deleteCourse/${courseID}`)
+
+  if (res.data.success) {
+    dispatch(getCourses())
+    dispatch(setAlert('Course Is Deleted!', 'success'))
+    dispatch(goPage(history, 'education'))
   }
 }

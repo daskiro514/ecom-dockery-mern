@@ -14,8 +14,7 @@ router.get('/getNotifications/:id', async (req, res) => {
 })
 
 router.delete('/deleteNotification/:id', async (req, res) => {
-  const notificationID = req.params.id
-  await Notification.deleteOne({ _id: notificationID })
+  await Notification.findByIdAndDelete(req.params.id)
 
   res.json({
     success: true
