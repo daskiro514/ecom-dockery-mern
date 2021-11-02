@@ -10,6 +10,7 @@ const gravatar = require('gravatar')
 const User = require('../../models/User')
 const Order = require('../../models/Order')
 const Notification = require('../../models/Notification')
+const Course = require('../../models/Course')
 
 // FILE UPLOAD
 const fileUpload = require('../../utils/fileUpload')
@@ -51,54 +52,6 @@ router.post('/addNewClient', async (req, res) => {
     success: true
   })
 })
-
-// router.post('/addNewClient',
-//   fileUpload.fields([
-//     { name: 'w9', maxCount: 1 },
-//     { name: 'einVerificationLetter', maxCount: 1 },
-//     { name: 'articlesOfOrganization', maxCount: 1 },
-//     { name: 'bankCard', maxCount: 1 },
-//     { name: 'usDriversLicense', maxCount: 1 },
-//     { name: 'creditDebitCardFront', maxCount: 1 },
-//     { name: 'creditDebitCardBack', maxCount: 1 },
-//   ]),
-//   async (req, res) => {
-//     let w9 = req.files['w9'][0].filename
-//     let einVerificationLetter = req.files['einVerificationLetter'][0].filename
-//     let articlesOfOrganization = req.files['articlesOfOrganization'][0].filename
-//     let bankCard = req.files['bankCard'][0].filename
-//     let usDriversLicense = req.files['usDriversLicense'][0].filename
-//     let creditDebitCardFront = req.files['creditDebitCardFront'][0].filename
-//     let creditDebitCardBack = req.files['creditDebitCardBack'][0].filename
-
-//     let newClient = new User({
-//       ...req.body
-//     })
-
-//     newClient.w9 = w9
-//     newClient.einVerificationLetter = einVerificationLetter
-//     newClient.articlesOfOrganization = articlesOfOrganization
-//     newClient.bankCard = bankCard
-//     newClient.usDriversLicense = usDriversLicense
-//     newClient.creditDebitCardFront = creditDebitCardFront
-//     newClient.creditDebitCardBack = creditDebitCardBack
-
-//     newClient.passwordForUpdate = req.body.password
-//     newClient.password = bcrypt.hashSync(req.body.password, 10)
-//     const avatar = normalize(
-//       gravatar.url(req.body.email, { s: '200', r: 'pg', d: 'mm' }),
-//       { forceHttps: true }
-//     )
-//     newClient.avatar = avatar
-//     newClient.type = 'client'
-
-//     await newClient.save()
-
-//     res.json({
-//       success: true
-//     })
-//   }
-// )
 
 router.get('/getClient/:id', async (req, res) => {
   const client = await User.findById(req.params.id)
@@ -157,6 +110,27 @@ router.post('/storeClientNotification', async (req, res) => {
 
   res.json({
     success: true
+  })
+})
+
+router.post('/addNewCourse', async (req, res) => {
+  const newCourse = new Course({
+    ...req.body
+  })
+
+  await newCourse.save()
+
+  res.json({
+    success: true
+  })
+})
+
+router.get('/getCourses', async (req, res) => {
+  const courses = await Course.find()
+
+  res.json({
+    success: true,
+    courses
   })
 })
 

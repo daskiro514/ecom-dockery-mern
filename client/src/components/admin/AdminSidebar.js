@@ -46,6 +46,12 @@ const AdminSidebar = ({ logout, setCurrentPage, currentPage }) => {
             <div>Clients</div>
           </div>
         </div>
+        <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'education' ? 'selected' : '')} onClick={() => goPage('education')}>
+          <div className='d-flex align-items-center'>
+            <div><i className='fa fa-database mr-2 h6'></i></div>
+            <div>Education</div>
+          </div>
+        </div>
         <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'settings' ? 'selected' : '')} onClick={() => goPage('settings')}>
           <div className='d-flex align-items-center'>
             <div><i className='fa fa-clock-o mr-2 h6'></i></div>

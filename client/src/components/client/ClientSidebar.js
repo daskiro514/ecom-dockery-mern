@@ -2,13 +2,26 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { logout } from '../../actions/auth'
 import { useHistory } from "react-router-dom"
+import { setCurrentPage } from '../../actions/admin'
 
-const ClientSidebar = ({ logout }) => {
+const ClientSidebar = ({ logout, setCurrentPage, currentPage }) => {
   let history = useHistory()
 
+  // const goPage = async location => {
+  //   await history.push(`/`)
+  //   await history.push(`/dashboard`)
+  //   await history.push(`/dashboard/${location}`)
+  // }
+
   const goPage = async location => {
+    setCurrentPage(location)
     await history.push(`/`)
     await history.push(`/dashboard`)
+
+    if (location === 'dashboard') {
+      await history.push(`/dashboard/`)
+      return
+    }
     await history.push(`/dashboard/${location}`)
   }
 
@@ -27,13 +40,13 @@ const ClientSidebar = ({ logout }) => {
         <div className='row mx-1 pt-4 h5'>
           Menu
         </div>
-        <div className='row mx-1 h5 menuItem' onClick={() => goPage('')}>
+        <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'dashboard' ? 'selected' : '')} onClick={() => goPage('dashboard')}>
           <div className='d-flex align-items-center'>
             <i className='fa fa-map-pin pt-2 mr-2 pr-1 h6'></i>
             <span>Store Report</span>
           </div>
         </div>
-        <div className='row mx-1 h5 menuItem' onClick={() => goPage('account')}>
+        <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'account' ? 'selected' : '')} onClick={() => goPage('account')}>
           <div className='d-flex align-items-center'>
             <i className='fa fa-database pt-2 mr-2 h6'></i>
             <span>My Account</span>
@@ -51,9 +64,14 @@ const ClientSidebar = ({ logout }) => {
             <span>Settings</span>
           </div>
         </div> */}
-        <div className='row mx-1 h5 menuItem signoutLink' onClick={logout}>
-          <i className='fa fa-sign-out pt-2 mr-1 h6'></i>
-          <span className='pt-1'>Sign Out</span>
+        <div className='row mx-1 h5 menuItem rounded p-1 signoutLink' onClick={() => {
+          setCurrentPage('dashboard')
+          logout()
+        }}>
+          <div className='d-flex align-items-center'>
+            <div><i className='fa fa-sign-out mr-2 h6'></i></div>
+            <div>Sign Out</div>
+          </div>
         </div>
       </div>
     </div>
@@ -62,6 +80,7 @@ const ClientSidebar = ({ logout }) => {
 
 const mapStateToProps = state => ({
   user: state.auth.user,
+  currentPage: state.admin.currentPage
 })
 
-export default connect(mapStateToProps, { logout })(ClientSidebar)
+export default connect(mapStateToProps, { logout, setCurrentPage })(ClientSidebar)

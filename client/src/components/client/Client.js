@@ -7,6 +7,7 @@ import ClientStoreManagement from './ClientStoreManagement'
 import ClientSettings from './ClientSettings'
 import ClientHeader from './ClientHeader'
 import ClientStoreReport from './ClientStoreReport'
+import ClientEmailSubmit from './ClientEmailSubmit'
 
 const Client = () => {
 
@@ -21,6 +22,7 @@ const Client = () => {
             <PrivateRoute exact path="/account" component={ClientAccount} />
             <PrivateRoute exact path="/store-manage" component={ClientStoreManagement} />
             <PrivateRoute exact path="/settings" component={ClientSettings} />
+            <PrivateRoute exact path="/email" component={ClientEmailSubmit} />
           </Router>
         </div>
       </div>

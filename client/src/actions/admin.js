@@ -7,6 +7,7 @@ import {
   ADMIN_CLEINT_LOADED,
   ADMIN_CLIENT_SET_CURRENT_PAGE,
   ADMIN_CLIENT_ORDERS_LOADED,
+  COURSES_LOADED
 } from './types'
 
 export const setCurrentPage = currentPage => async dispatch => {
@@ -104,5 +105,26 @@ export const storeClientNotification = (clientID, notification) => async dispatc
 
   if (res.data.success) {
     dispatch(setAlert('Notification Sent Successfully!', 'success'))
+  }
+}
+
+export const addNewCourse = (history, formData) => async dispatch => {
+  const res = await api.post('/admin/addNewCourse', formData)
+
+  if (res.data.success) {
+    dispatch(getCourses())
+    dispatch(setAlert('New Course Saved Successfully!', 'success'))
+    dispatch(goPage(history, 'education'))
+  }
+} 
+
+export const getCourses = () => async dispatch => {
+  const res = await api.get('/admin/getCourses')
+
+  if (res.data.success) {
+    dispatch({
+      type: COURSES_LOADED,
+      payload: res.data.courses
+    })
   }
 }

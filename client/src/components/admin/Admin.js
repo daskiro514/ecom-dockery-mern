@@ -8,6 +8,8 @@ import AdminClient from './admin-client/AdminClient'
 import AdminNewClient from './AdminNewClient'
 import AdminSettings from './AdminSettings'
 import AdminHeader from './AdminHeader'
+import AdminEducation from './AdminEducation'
+import AdminEducationCreate from './AdminEducationCreate'
 
 const Admin = () => {
 
@@ -23,6 +25,8 @@ const Admin = () => {
             <PrivateRoute exact path="/client/:id" component={AdminClient} />
             <PrivateRoute exact path="/addClient" component={AdminNewClient} />
             <PrivateRoute exact path="/settings" component={AdminSettings} />
+            <PrivateRoute exact path="/education" component={AdminEducation} />
+            <PrivateRoute exact path="/education/create" component={AdminEducationCreate} />
           </Router>
         </div>
       </div>

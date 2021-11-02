@@ -1,3 +1,29 @@
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, p, span, tr, th, td, div, ul, li, input, label, textarea {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.font-20 {
+  font-size: 20px !important;
+}
+
+.manual-shadow {
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.manual-input {
+  border-radius: 12px;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  height: 28px;
+  background-color: #F5F7FB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
+}
+
 .bg-admin {
   background-color: #F5F7FB;
   min-height: 100vh;
@@ -7,8 +33,14 @@
   min-height: 100vh;
 }
 
+.bg-admin .sidebar .menuItem {
+  font-size: 22px;
+  color: #837185;
+}
+
 .bg-admin .sidebar .menuItem:hover {
   background-color: rgba(110, 15, 125, 0.1);
+  border-radius: 10px;
   cursor: pointer;
 }
 
@@ -113,6 +145,8 @@
   padding-bottom: 1px;
   height: 28px;
   background-color: #F5F7FB;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border: none;
 }
 
 .file {
@@ -220,4 +254,19 @@ a {
 
 .selected {
   background-color: rgba(110, 15, 125, 0.1);
+}
+
+.notification-list {
+  padding-left: 0px !important;
+}
+
+.notification-item {
+  list-style: none;
+  padding-left: 10px !important;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

@@ -1,17 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getClientOrders } from '../../actions/admin'
+import { deleteNotification } from '../../actions/client'
 import Chart from 'react-apexcharts'
 import { getTotalSales, getClientChartOptions, getClientChartSeries } from '../../utils/clientCharts'
-import { getNotifications } from '../../actions/client'
 import { formatDateAndTimeInPDT, formatDate } from '../../utils/formatDate1'
 import { totalNetProfit, totalNetProfitChange, totalGrossProfit, totalGrossProfitChange, totalSales, totalSalesChange, getTrendingItem, getMostSoldItem } from '../../utils/storeStatistics'
 
-const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, getNotifications, notifications }) => {
+const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, notifications, deleteNotification }) => {
   React.useEffect(() => {
     getClientOrders(clientID)
-    getNotifications(clientID)
-  }, [getClientOrders, getNotifications, clientID])
+  }, [getClientOrders, clientID])
 
   const [pageOrders, setPageOrders] = React.useState([])
   const [pageNumber, setPageNumber] = React.useState(1)
@@ -70,10 +69,13 @@ const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, getNotific
             <div className='h5'>
               Notifications
             </div>
-            <ul>
+            <ul className='notification-list'>
               {notifications.map((item, index) =>
-                <li key={index}>
-                  {item.content} {formatDate(item.date)}
+                <li key={index} className='notification-item p-1 mb-1'>
+                  <div className='d-flex justify-content-between align-items-center'>
+                    <div className='text-justify'>{item.content} <span className='text-secondary ml-3'>{formatDate(item.date)}</span></div>
+                    <div><button onClick={() => deleteNotification(clientID, item._id)} className='btn btn-sm'><i className='fa fa-remove'></i></button></div>
+                  </div>
                 </li>
               )}
             </ul>
@@ -250,4 +252,4 @@ const mapStateToProps = state => ({
   notifications: state.client.notifications
 })
 
-export default connect(mapStateToProps, { getClientOrders, getNotifications })(ClientStoreReport)
+export default connect(mapStateToProps, { getClientOrders, deleteNotification })(ClientStoreReport)
