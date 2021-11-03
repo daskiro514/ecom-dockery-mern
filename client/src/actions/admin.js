@@ -8,7 +8,8 @@ import {
   ADMIN_CLIENT_SET_CURRENT_PAGE,
   ADMIN_CLIENT_ORDERS_LOADED,
   COURSES_LOADED,
-  COURSE_LOADED
+  COURSE_LOADED,
+  CLIENT_FOR_CHAT_LOADED
 } from './types'
 
 export const setCurrentPage = currentPage => async dispatch => {
@@ -159,4 +160,11 @@ export const deleteCourse = (history, courseID) => async dispatch => {
     dispatch(setAlert('Course Is Deleted!', 'success'))
     dispatch(goPage(history, 'education'))
   }
+}
+
+export const setChatClient = clientID => async dispatch => {
+  dispatch({
+    type: CLIENT_FOR_CHAT_LOADED,
+    payload: clientID
+  })
 }

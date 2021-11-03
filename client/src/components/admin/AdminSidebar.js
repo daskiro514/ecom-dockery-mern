@@ -46,6 +46,12 @@ const AdminSidebar = ({ logout, setCurrentPage, currentPage }) => {
             <div>Clients</div>
           </div>
         </div>
+        <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'messages' ? 'selected' : '')} onClick={() => goPage('messages')}>
+          <div className='d-flex align-items-center'>
+            <div><i className='fa fa-wechat mr-2 h6'></i></div>
+            <div>Messages</div>
+          </div>
+        </div>
         <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'education' ? 'selected' : '')} onClick={() => goPage('education')}>
           <div className='d-flex align-items-center'>
             <div><i className='fa fa-file-video-o mr-2 h6'></i></div>

@@ -6,14 +6,19 @@ import {
   ADMIN_CLIENT_SET_CURRENT_PAGE,
   ADMIN_CLIENT_ORDERS_LOADED,
   COURSES_LOADED,
-  COURSE_LOADED
+  COURSE_LOADED,
+  CLIENT_FOR_CHAT_LOADED
 } from '../actions/types'
 
 const initialState = {
   currentPage: 'dashboard',
   isLoading: false,
   clients: [],
-  adminClient: null,
+  adminClient: {
+    firstName: '',
+    lastName: ''
+  },
+  clientIDForChat: null,
   adminClientCurrentPage: 'document',
   adminClientOrders: [],
   courses: [],
@@ -68,6 +73,11 @@ const adminReducer = (state = initialState, action) => {
       return {
         ...state,
         course: payload
+      }
+    case CLIENT_FOR_CHAT_LOADED:
+      return {
+        ...state,
+        clientIDForChat: payload
       }
     default:
       return state

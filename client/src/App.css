@@ -10,6 +10,10 @@ h1, h2, h3, h4, h5, h6, p, span, tr, th, td, div, ul, li, input, label, textarea
   font-size: 20px !important;
 }
 
+.font-13 {
+  font-size: 13px !important;
+}
+
 .manual-shadow {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
@@ -41,6 +45,13 @@ h1, h2, h3, h4, h5, h6, p, span, tr, th, td, div, ul, li, input, label, textarea
 .bg-admin .sidebar .menuItem {
   font-size: 22px;
   color: #837185;
+}
+
+.message-item {
+  background-color: rgba(110, 15, 125, 0.1);
+  width: fit-content;
+  max-width: 70%;
+  word-break: break-all;
 }
 
 .bg-admin .sidebar .menuItem:hover {
@@ -274,4 +285,9 @@ a {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.admin-client-messages .overflow {
+  height: 85vh;
+  overflow: auto;
 }

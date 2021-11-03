@@ -11,6 +11,8 @@ import AdminHeader from './AdminHeader'
 import AdminEducation from './AdminEducation'
 import AdminEducationCreate from './AdminEducationCreate'
 import AdminEducationEdit from './AdminEducationEdit'
+import AdminMessages from './admin-messages/AdminMessages'
+import AdminClientMessages from './admin-messages/AdminClientMessages'
 
 const Admin = () => {
 
@@ -25,10 +27,12 @@ const Admin = () => {
             <PrivateRoute exact path="/clients" component={AdminClients} />
             <PrivateRoute exact path="/client/:id" component={AdminClient} />
             <PrivateRoute exact path="/addClient" component={AdminNewClient} />
-            <PrivateRoute exact path="/settings" component={AdminSettings} />
+            <PrivateRoute exact path="/messages" component={AdminMessages} />
+            <PrivateRoute exact path="/messages/:id" component={AdminClientMessages} />
             <PrivateRoute exact path="/education" component={AdminEducation} />
             <PrivateRoute exact path="/education/create" component={AdminEducationCreate} />
             <PrivateRoute exact path="/education/edit/:id" component={AdminEducationEdit} />
+            <PrivateRoute exact path="/settings" component={AdminSettings} />
           </Router>
         </div>
       </div>
