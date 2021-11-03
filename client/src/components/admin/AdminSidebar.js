@@ -48,7 +48,7 @@ const AdminSidebar = ({ logout, setCurrentPage, currentPage }) => {
         </div>
         <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'education' ? 'selected' : '')} onClick={() => goPage('education')}>
           <div className='d-flex align-items-center'>
-            <div><i className='fa fa-database mr-2 h6'></i></div>
+            <div><i className='fa fa-file-video-o mr-2 h6'></i></div>
             <div>Education</div>
           </div>
         </div>

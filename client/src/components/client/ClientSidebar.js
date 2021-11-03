@@ -54,7 +54,7 @@ const ClientSidebar = ({ logout, setCurrentPage, currentPage }) => {
         </div>
         <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'education' ? 'selected' : '')} onClick={() => goPage('education')}>
           <div className='d-flex align-items-center'>
-            <i className='fas fa-chalkboard-teacher pt-2 mr-2 h6'></i>
+            <i className='fa fa-file-video-o pt-2 mr-2 h6'></i>
             <span>Education</span>
           </div>
         </div>
