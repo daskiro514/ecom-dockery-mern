@@ -52,6 +52,12 @@ const ClientSidebar = ({ logout, setCurrentPage, currentPage }) => {
             <span>My Account</span>
           </div>
         </div>
+        <div className={'row mx-1 h5 menuItem rounded p-1 ' + (currentPage === 'education' ? 'selected' : '')} onClick={() => goPage('education')}>
+          <div className='d-flex align-items-center'>
+            <i className='fas fa-chalkboard-teacher pt-2 mr-2 h6'></i>
+            <span>Education</span>
+          </div>
+        </div>
         {/* <div className='row mx-1 h5 menuItem' onClick={() => goPage('store-manage')}>
           <div className='d-flex align-items-center'>
             <i className='fa fa-map-pin pt-2 mr-2 pr-1 h6'></i>

@@ -33,6 +33,11 @@ h1, h2, h3, h4, h5, h6, p, span, tr, th, td, div, ul, li, input, label, textarea
   min-height: 100vh;
 }
 
+.sidebar i {
+  min-width: 20px;
+  text-align: center;
+}
+
 .bg-admin .sidebar .menuItem {
   font-size: 22px;
   color: #837185;

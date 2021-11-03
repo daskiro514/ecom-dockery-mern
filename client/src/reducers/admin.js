@@ -25,7 +25,7 @@ const initialState = {
 }
 
 const adminReducer = (state = initialState, action) => {
-  const {type, payload} = action
+  const { type, payload } = action
 
   switch (type) {
     case CURRENT_PAGE_SET: {
@@ -34,12 +34,12 @@ const adminReducer = (state = initialState, action) => {
         currentPage: payload
       }
     }
-    case ADMIN_PAGE_SET_LOADING: 
+    case ADMIN_PAGE_SET_LOADING:
       return {
         ...state,
         isLoading: payload
       }
-    case ADMIN_CLIENTS_LOADED: 
+    case ADMIN_CLIENTS_LOADED:
       return {
         ...state,
         clients: payload,
