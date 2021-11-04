@@ -2,6 +2,7 @@ import api from '../utils/api'
 import { setAlert } from './alert'
 import {
   CLIENT_NOTIFICATIONS_LOADED,
+  CLIENT_ADMIN_LOADED
 } from './types'
 
 export const getNotifications = clientID => async dispatch => {
@@ -21,5 +22,16 @@ export const deleteNotification = (clientID, notificationID) => async dispatch =
   if (res.data.success) {
     dispatch(setAlert('Notification Deleted!', 'success'))
     dispatch(getNotifications(clientID))
+  }
+}
+
+export const getAdmin = () => async dispatch => {
+  const res = await api.get('/client/getAdmin')
+
+  if (res.data.success) {
+    dispatch({
+      type: CLIENT_ADMIN_LOADED,
+      payload: res.data.admin
+    })
   }
 }

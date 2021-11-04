@@ -8,6 +8,7 @@ import ClientSettings from './ClientSettings'
 import ClientHeader from './ClientHeader'
 import ClientStoreReport from './ClientStoreReport'
 import ClientEducation from './ClientEducation'
+import ClientMessages from './ClientMessages'
 
 const Client = () => {
 
@@ -19,6 +20,7 @@ const Client = () => {
           <ClientHeader />
           <Router basename="/dashboard">
             <PrivateRoute exact path="/" component={ClientStoreReport} />
+            <PrivateRoute exact path="/messages" component={ClientMessages} />
             <PrivateRoute exact path="/account" component={ClientAccount} />
             <PrivateRoute exact path="/education" component={ClientEducation} />
             <PrivateRoute exact path="/store-manage" component={ClientStoreManagement} />

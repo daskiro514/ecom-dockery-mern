@@ -2,8 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import AdminMessagesSidebar from './AdminMessagesSidebar'
 import { getClient, setChatClient } from '../../../actions/admin'
+import { addNewMessage, getMessages, deleteMessage } from '../../../actions/message'
+import { formatDateTime } from '../../../utils/formatDate1'
 
-const AdminClientMessages = ({ match, getClient, admin, client, setChatClient }) => {
+const AdminClientMessages = ({ match, getClient, admin, adminID, setChatClient, addNewMessage, getMessages, deleteMessage, messages }) => {
   const clientID = match.params.id
 
   React.useEffect(() => {
@@ -14,20 +16,29 @@ const AdminClientMessages = ({ match, getClient, admin, client, setChatClient })
     setChatClient(clientID)
   }, [setChatClient, clientID])
 
+  React.useEffect(() => {
+    getMessages(clientID)
+  }, [getMessages, clientID])
+
   const messagesEndRef = React.useRef(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
   }
 
-  React.useEffect(scrollToBottom, []);
+  React.useEffect(scrollToBottom, [messages]);
 
-  const [message, setMessage] = React.useState('')
+  const [content, setContent] = React.useState('')
 
   const onSubmit = e => {
     e.preventDefault()
-    alert(message)
-    setMessage('')
+    var formData = {
+      content,
+      client: clientID,
+      writer: admin._id
+    }
+    addNewMessage(formData)
+    setContent('')
   }
 
   return (
@@ -42,54 +53,17 @@ const AdminClientMessages = ({ match, getClient, admin, client, setChatClient })
         <div className='col-lg-9'>
           <div className='bg-white m-1 rounded-lg p-3 overflow'>
             <div style={{ marginBottom: '70px' }}>
-              <div className='mt-2'>
-                <div className='font-13'><b>{`${client.firstName} ${client.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+              {messages.map((item, index) =>
+                <div key={index} className='mt-2'>
+                  <div className={'font-13 ' + (item.writer._id === adminID ? 'text-right' : '')}>
+                    <b>{`${item.writer.firstName} ${item.writer.lastName}`}, {formatDateTime(item.date)}</b>
+                    {item.writer._id === adminID ? <i onClick={() => window.confirm('Are you sure?') ? deleteMessage(clientID, item._id) : null} className='fa fa-trash-o cursor-pointer pl-2'></i> : null}
+                  </div>
+                  <div className={'p-1 message-item rounded ' + (item.writer._id === adminID ? 'ml-auto' : '')}>
+                    {item.content}
+                  </div>
                 </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13 text-right'><b>{`${admin.firstName} ${admin.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded ml-auto'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13'><b>{`${client.firstName} ${client.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13 text-right'><b>{`${admin.firstName} ${admin.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded ml-auto'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13'><b>{`${client.firstName} ${client.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13 text-right'><b>{`${admin.firstName} ${admin.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded ml-auto'>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13'><b>{`${client.firstName} ${client.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded'>
-                  Thank you.
-                </div>
-              </div>
-              <div className='mt-2'>
-                <div className='font-13 text-right'><b>{`${admin.firstName} ${admin.lastName}`}, 2021/11/03 23:13</b></div>
-                <div className='p-1 message-item rounded ml-auto'>
-                  You are welcome.
-                </div>
-              </div>
+              )}
             </div>
 
             <div style={{ position: 'absolute', bottom: '10px', width: 'calc(100% - 85px)' }}>
@@ -98,15 +72,15 @@ const AdminClientMessages = ({ match, getClient, admin, client, setChatClient })
                   <textarea
                     type='text'
                     placeholder={`Send a message to ${admin.firstName}`}
-                    name='message'
+                    name='content'
                     className='form-control'
-                    value={message}
+                    value={content}
                     row={1}
-                    onChange={e => setMessage(e.target.value)}
+                    onChange={e => setContent(e.target.value)}
                     required
                   />
-                  <div class="input-group-append">
-                    <button class="btn badge-pending" type="submit"><i className='fa fa-paper-plane-o'></i></button>
+                  <div className="input-group-append">
+                    <button className="btn badge-pending" type="submit"><i className='fa fa-paper-plane-o'></i></button>
                   </div>
                 </div>
               </form>
@@ -122,7 +96,9 @@ const AdminClientMessages = ({ match, getClient, admin, client, setChatClient })
 
 const mapStateToProps = state => ({
   client: state.admin.adminClient,
-  admin: state.auth.user
+  admin: state.auth.user,
+  adminID: state.auth.user._id,
+  messages: state.message.messages
 })
 
-export default connect(mapStateToProps, { getClient, setChatClient })(AdminClientMessages)
+export default connect(mapStateToProps, { getClient, setChatClient, addNewMessage, getMessages, deleteMessage })(AdminClientMessages)

@@ -1,9 +1,15 @@
 import {
-  CLIENT_NOTIFICATIONS_LOADED
+  CLIENT_NOTIFICATIONS_LOADED,
+  CLIENT_ADMIN_LOADED
 } from '../actions/types'
 
 const initialState = {
-  notifications: []
+  notifications: [],
+  clientAdmin: {
+    _id: '',
+    firstName: '',
+    lastName: ''
+  }
 }
 
 const clientReducer = (state = initialState, action) => {
@@ -14,6 +20,11 @@ const clientReducer = (state = initialState, action) => {
       return {
         ...state,
         notifications: payload,
+      }
+    case CLIENT_ADMIN_LOADED:
+      return {
+        ...state,
+        clientAdmin: payload
       }
     default:
       return state
