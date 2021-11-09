@@ -1,9 +1,9 @@
 import {
-  MESSAGES_LOADED
+  MESSAGES_LOADED,
 } from '../actions/types'
 
 const initialState = {
-  messages: []
+  messages: [],
 }
 
 const messageReducer = (state = initialState, action) => {

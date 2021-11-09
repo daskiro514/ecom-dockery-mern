@@ -163,6 +163,8 @@ export const deleteCourse = (history, courseID) => async dispatch => {
 }
 
 export const setChatClient = clientID => async dispatch => {
+  localStorage.setItem('chatClient', clientID)
+  
   dispatch({
     type: CLIENT_FOR_CHAT_LOADED,
     payload: clientID

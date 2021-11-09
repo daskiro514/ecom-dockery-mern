@@ -1,7 +1,7 @@
 import api from '../utils/api'
-import { setAlert } from './alert'
+// import { setAlert } from './alert'
 import {
-  MESSAGES_LOADED
+  MESSAGES_LOADED,
 } from './types'
 
 export const addNewMessage = (formData) => async dispatch => {
@@ -23,10 +23,26 @@ export const getMessages = clientID => async dispatch => {
   }
 }
 
-export const deleteMessage = (clientID, messageID) => async dispatch => {
-  const res = await api.delete(`/message/deleteMessage/${messageID}`)
+export const deleteMessage = (clientID, messageID, written = 'client') => async dispatch => {
+  const res = await api.delete(`/message/deleteMessage/?clientID=${clientID}&id=${messageID}&written=${written}`)
 
   if (res.data.success) {
     dispatch(getMessages(clientID))
+  }
+}
+
+export const getClientsMessageNumbers = async () => {
+  const res = await api.get('/message/getClientsMessageNumbers')
+  
+  if (res.data.success) {
+    return res.data.clientsMessageNumbers
+  }
+}
+
+export const getAdminMessageNumbers = async (clientID) => {
+  const res = await api.get(`/message/getAdminMessageNumbers/${clientID}`)
+
+  if (res.data.success) {
+    return res.data.adminMessageNumbers
   }
 }

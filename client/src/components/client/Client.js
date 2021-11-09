@@ -1,4 +1,5 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import PrivateRoute from '../routing/PrivateRoute'
 import ClientSidebar from './ClientSidebar'
@@ -9,8 +10,40 @@ import ClientHeader from './ClientHeader'
 import ClientStoreReport from './ClientStoreReport'
 import ClientEducation from './ClientEducation'
 import ClientMessages from './ClientMessages'
+import { getAdminMessageNumbers, getMessages } from '../../actions/message'
+import { setAlert } from '../../actions/alert'
 
-const Client = () => {
+var firstIntervalID = -1
+
+const Client = ({ setAlert, clientID, getMessages }) => {
+
+  React.useEffect(() => {
+    var intervalID = setInterval(async function () {
+      var date = new Date()
+      var seconds = date.getSeconds()
+      if (seconds % 5 === 0) {
+        let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('adminMessageNumbers'))
+        let messageNumbersFromDB = await getAdminMessageNumbers(clientID)
+    
+        if (messageNumbersFromDB.messageNumber === 0) {
+    
+        } else if (messageNumbersFromDB.messageNumber > messageNumbersFromLocalStorage.messageNumber) {
+          setAlert(`There are ${messageNumbersFromDB.messageNumber - messageNumbersFromLocalStorage.messageNumber} new messages from Admin`, 'success')
+          getMessages(clientID)
+        } else if (messageNumbersFromDB.messageNumber > messageNumbersFromLocalStorage.messageNumber) {
+          getMessages(clientID)
+        }
+    
+        localStorage.setItem('adminMessageNumbers', JSON.stringify(messageNumbersFromDB))
+      }
+    }, 1000)
+  
+    if (firstIntervalID < 0) {
+      firstIntervalID = intervalID
+    } else {
+      clearInterval(intervalID)
+    }
+  }, [getMessages, setAlert])
 
   return (
     <div className='container-fluid bg-Client bg-admin'>
@@ -32,4 +65,8 @@ const Client = () => {
   )
 }
 
-export default Client
+const mapStateToProps = state => ({
+  clientID: state.auth.user._id
+})
+
+export default connect(mapStateToProps, { setAlert, getMessages })(Client)

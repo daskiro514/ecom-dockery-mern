@@ -5,7 +5,7 @@ import { getClient, setChatClient } from '../../../actions/admin'
 import { addNewMessage, getMessages, deleteMessage } from '../../../actions/message'
 import { formatDateTime } from '../../../utils/formatDate1'
 
-const AdminClientMessages = ({ match, getClient, admin, adminID, setChatClient, addNewMessage, getMessages, deleteMessage, messages }) => {
+const AdminClientMessages = ({ match, getClient, admin, adminID, setChatClient, addNewMessage, deleteMessage, getMessages, messages }) => {
   const clientID = match.params.id
 
   React.useEffect(() => {
@@ -26,7 +26,7 @@ const AdminClientMessages = ({ match, getClient, admin, adminID, setChatClient, 
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
   }
 
-  React.useEffect(scrollToBottom, [messages]);
+  React.useEffect(scrollToBottom, [messages])
 
   const [content, setContent] = React.useState('')
 
@@ -35,7 +35,8 @@ const AdminClientMessages = ({ match, getClient, admin, adminID, setChatClient, 
     var formData = {
       content,
       client: clientID,
-      writer: admin._id
+      writer: admin._id,
+      writtenBy: 'admin'
     }
     addNewMessage(formData)
     setContent('')
@@ -57,7 +58,7 @@ const AdminClientMessages = ({ match, getClient, admin, adminID, setChatClient, 
                 <div key={index} className='mt-2'>
                   <div className={'font-13 ' + (item.writer._id === adminID ? 'text-right' : '')}>
                     <b>{`${item.writer.firstName} ${item.writer.lastName}`}, {formatDateTime(item.date)}</b>
-                    {item.writer._id === adminID ? <i onClick={() => window.confirm('Are you sure?') ? deleteMessage(clientID, item._id) : null} className='fa fa-trash-o cursor-pointer pl-2'></i> : null}
+                    {item.writer._id === adminID ? <i onClick={() => window.confirm('Are you sure?') ? deleteMessage(clientID, item._id, 'admin') : null} className='fa fa-trash-o cursor-pointer pl-2'></i> : null}
                   </div>
                   <div className={'p-1 message-item rounded ' + (item.writer._id === adminID ? 'ml-auto' : '')}>
                     {item.content}
@@ -101,4 +102,4 @@ const mapStateToProps = state => ({
   messages: state.message.messages
 })
 
-export default connect(mapStateToProps, { getClient, setChatClient, addNewMessage, getMessages, deleteMessage })(AdminClientMessages)
+export default connect(mapStateToProps, { getClient, setChatClient, addNewMessage, deleteMessage, getMessages })(AdminClientMessages)

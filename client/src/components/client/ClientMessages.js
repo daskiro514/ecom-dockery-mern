@@ -4,7 +4,7 @@ import { addNewMessage, getMessages, deleteMessage } from '../../actions/message
 import { getAdmin } from '../../actions/client'
 import { formatDateTime } from '../../utils/formatDate1'
 
-const ClientMessages = ({ client, clientID, addNewMessage, getMessages, deleteMessage, messages, getAdmin, admin }) => {
+const ClientMessages = ({ clientID, addNewMessage, getMessages, deleteMessage, messages, getAdmin, admin }) => {
   React.useEffect(() => {
     getMessages(clientID)
   }, [getMessages, clientID])

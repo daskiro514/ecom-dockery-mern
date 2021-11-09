@@ -116,6 +116,15 @@ const UserSchema = new mongoose.Schema({
   amazonStoreUrl: {
     type: String
   },
+  // FOR MESSAGE
+  toAdminMessages: {
+    type: Number,
+    default: 0
+  },
+  toClientMessages: {
+    type: Number,
+    default: 0
+  }
 })
 
 module.exports = mongoose.model('user', UserSchema)
