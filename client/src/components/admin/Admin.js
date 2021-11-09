@@ -31,14 +31,12 @@ const Admin = ({ setAlert, getMessages }) => {
     var intervalID = setInterval(async function () {
       var clientIDForChat = localStorage.getItem('chatClient')
       let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
+      let messageNumbersFromDB = await getClientsMessageNumbers()
 
       if (messageNumbersFromLocalStorage === null) {
         localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
       }
 
-      let messageNumbersFromDB = await getClientsMessageNumbers()
-      console.log(messageNumbersFromLocalStorage)
-      console.log(messageNumbersFromDB)
       if (messageNumbersFromDB === null || messageNumbersFromLocalStorage === null || messageNumbersFromDB === undefined || messageNumbersFromLocalStorage === undefined) return false
 
       if (checkArraysSame(messageNumbersFromLocalStorage, messageNumbersFromDB)) {
