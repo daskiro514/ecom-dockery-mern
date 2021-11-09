@@ -27,37 +27,33 @@ const checkArraysSame = (array1, array2) => {
 var firstIntervalID = -1
 
 const Admin = ({ setAlert, getMessages }) => {
-
   React.useEffect(() => {
     var intervalID = setInterval(async function () {
-      var date = new Date()
-      var seconds = date.getSeconds()
-      if (seconds % 5 === 0) {
-        var clientIDForChat = localStorage.getItem('chatClient')
-        let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
-        let messageNumbersFromDB = await getClientsMessageNumbers()
-        if (messageNumbersFromDB === null || messageNumbersFromLocalStorage === null || messageNumbersFromDB === undefined || messageNumbersFromLocalStorage === undefined) return false
-    
-        if (checkArraysSame(messageNumbersFromLocalStorage, messageNumbersFromDB)) {
-    
-        } else {
-          messageNumbersFromDB.forEach(element => {
-            var elementFromLocal = messageNumbersFromLocalStorage.find(el => el.clientID === element.clientID)
-            
-            if (element.messageNumber > elementFromLocal.messageNumber) {
-              setAlert(`There are ${element.messageNumber - elementFromLocal.messageNumber} new messages from ${element.clientFirstName} ${element.clientLastName}`, 'success')
-            }
 
-            if (element.clientID === clientIDForChat) {
-              getMessages(element.clientID)
-            }
-          })
-    
-          localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
-        }
+      var clientIDForChat = localStorage.getItem('chatClient')
+      let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
+      let messageNumbersFromDB = await getClientsMessageNumbers()
+      if (messageNumbersFromDB === null || messageNumbersFromLocalStorage === null || messageNumbersFromDB === undefined || messageNumbersFromLocalStorage === undefined) return false
+
+      if (checkArraysSame(messageNumbersFromLocalStorage, messageNumbersFromDB)) {
+
+      } else {
+        messageNumbersFromDB.forEach(element => {
+          var elementFromLocal = messageNumbersFromLocalStorage.find(el => el.clientID === element.clientID)
+
+          if (element.messageNumber > elementFromLocal.messageNumber) {
+            setAlert(`There are ${element.messageNumber - elementFromLocal.messageNumber} new messages from ${element.clientFirstName} ${element.clientLastName}`, 'success')
+          }
+
+          if (element.clientID === clientIDForChat) {
+            getMessages(element.clientID)
+          }
+        })
+
+        localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
       }
-    }, 1000)
-  
+    }, 5000)
+
     if (firstIntervalID < 0) {
       firstIntervalID = intervalID
     } else {

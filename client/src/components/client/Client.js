@@ -16,28 +16,23 @@ import { setAlert } from '../../actions/alert'
 var firstIntervalID = -1
 
 const Client = ({ setAlert, clientID, getMessages }) => {
-
   React.useEffect(() => {
     var intervalID = setInterval(async function () {
-      var date = new Date()
-      var seconds = date.getSeconds()
-      if (seconds % 5 === 0) {
-        let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('adminMessageNumbers'))
-        let messageNumbersFromDB = await getAdminMessageNumbers(clientID)
-    
-        if (messageNumbersFromDB.messageNumber === 0) {
-    
-        } else if (messageNumbersFromDB.messageNumber > messageNumbersFromLocalStorage.messageNumber) {
-          setAlert(`There are ${messageNumbersFromDB.messageNumber - messageNumbersFromLocalStorage.messageNumber} new messages from Admin`, 'success')
-          getMessages(clientID)
-        } else if (messageNumbersFromDB.messageNumber > messageNumbersFromLocalStorage.messageNumber) {
-          getMessages(clientID)
-        }
-    
-        localStorage.setItem('adminMessageNumbers', JSON.stringify(messageNumbersFromDB))
+      let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('adminMessageNumbers'))
+      let messageNumbersFromDB = await getAdminMessageNumbers(clientID)
+
+      if (messageNumbersFromDB.messageNumber === 0) {
+
+      } else if (messageNumbersFromDB.messageNumber > messageNumbersFromLocalStorage.messageNumber) {
+        setAlert(`There are ${messageNumbersFromDB.messageNumber - messageNumbersFromLocalStorage.messageNumber} new messages from Admin`, 'success')
+        getMessages(clientID)
+      } else if (messageNumbersFromDB.messageNumber < messageNumbersFromLocalStorage.messageNumber) {
+        getMessages(clientID)
       }
-    }, 1000)
-  
+
+      localStorage.setItem('adminMessageNumbers', JSON.stringify(messageNumbersFromDB))
+    }, 5000)
+
     if (firstIntervalID < 0) {
       firstIntervalID = intervalID
     } else {
