@@ -58,6 +58,7 @@ router.delete('/deleteMessage', async (req, res) => {
 })
 
 router.get('/getClientsMessageNumbers', async (req, res) => {
+  console.log('check on ADMIN')
   const clients = await User.find({type: 'client'})
   let clientsMessageNumbers = []
   clients.forEach(client => {
@@ -76,6 +77,7 @@ router.get('/getClientsMessageNumbers', async (req, res) => {
 })
 
 router.get('/getAdminMessageNumbers/:id', async (req, res) => {
+  console.log('check on CLIENT')
   const client = await User.findById(req.params.id)
 
   let adminMessageNumbers = {
