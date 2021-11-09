@@ -32,7 +32,7 @@ const Admin = ({ setAlert, getMessages }) => {
       var clientIDForChat = localStorage.getItem('chatClient')
       let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
 
-      if (messageNumbersFromLocalStorage) {
+      if (messageNumbersFromLocalStorage === null) {
         localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
       }
 
