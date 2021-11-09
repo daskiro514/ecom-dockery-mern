@@ -29,9 +29,13 @@ var firstIntervalID = -1
 const Admin = ({ setAlert, getMessages }) => {
   React.useEffect(() => {
     var intervalID = setInterval(async function () {
-
       var clientIDForChat = localStorage.getItem('chatClient')
       let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
+
+      if (messageNumbersFromLocalStorage) {
+        localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
+      }
+
       let messageNumbersFromDB = await getClientsMessageNumbers()
       console.log(messageNumbersFromLocalStorage)
       console.log(messageNumbersFromDB)
