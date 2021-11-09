@@ -18,8 +18,13 @@ var firstIntervalID = -1
 const Client = ({ setAlert, clientID, getMessages }) => {
   React.useEffect(() => {
     var intervalID = setInterval(async function () {
-      let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('adminMessageNumbers'))
       let messageNumbersFromDB = await getAdminMessageNumbers(clientID)
+
+      if (localStorage.getItem('adminMessageNumbers') === 'undefined' || localStorage.getItem('adminMessageNumbers') === null) {
+        localStorage.setItem('adminMessageNumbers', JSON.stringify(messageNumbersFromDB))
+      }
+
+      let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('adminMessageNumbers'))
 
       if (messageNumbersFromDB.messageNumber === 0) {
 
