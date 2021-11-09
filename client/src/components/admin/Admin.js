@@ -33,7 +33,10 @@ const Admin = ({ setAlert, getMessages }) => {
       let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
       let messageNumbersFromDB = await getClientsMessageNumbers()
 
-      if (messageNumbersFromLocalStorage === null) {
+      console.log(messageNumbersFromLocalStorage)
+
+      if (messageNumbersFromLocalStorage === null || messageNumbersFromLocalStorage === 'null') {
+        console.log('OK')
         localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
       }
 
