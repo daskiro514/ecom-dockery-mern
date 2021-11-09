@@ -32,8 +32,8 @@ const Admin = ({ setAlert, getMessages }) => {
       let messageNumbersFromDB = await getClientsMessageNumbers()
 
       console.log(localStorage.getItem('messageNumbers'))
-      
-      if (localStorage.getItem('messageNumbers') === null || localStorage.getItem('messageNumbers') === undefined) {
+
+      if (localStorage.getItem('messageNumbers') === null || localStorage.getItem('messageNumbers') === undefined || localStorage.getItem('messageNumbers') === 'undefined') {
         console.log('OK')
         localStorage.setItem('messageNumbers', JSON.stringify(messageNumbersFromDB))
       }
