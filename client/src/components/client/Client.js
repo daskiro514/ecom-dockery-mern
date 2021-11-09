@@ -38,7 +38,7 @@ const Client = ({ setAlert, clientID, getMessages }) => {
     } else {
       clearInterval(intervalID)
     }
-  }, [getMessages, setAlert])
+  }, [getMessages, setAlert, clientID])
 
   return (
     <div className='container-fluid bg-Client bg-admin'>
