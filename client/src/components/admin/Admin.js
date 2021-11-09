@@ -33,6 +33,8 @@ const Admin = ({ setAlert, getMessages }) => {
       var clientIDForChat = localStorage.getItem('chatClient')
       let messageNumbersFromLocalStorage = JSON.parse(localStorage.getItem('messageNumbers'))
       let messageNumbersFromDB = await getClientsMessageNumbers()
+      console.log(messageNumbersFromLocalStorage)
+      console.log(messageNumbersFromDB)
       if (messageNumbersFromDB === null || messageNumbersFromLocalStorage === null || messageNumbersFromDB === undefined || messageNumbersFromLocalStorage === undefined) return false
 
       if (checkArraysSame(messageNumbersFromLocalStorage, messageNumbersFromDB)) {
