@@ -124,6 +124,14 @@ const UserSchema = new mongoose.Schema({
   toClientMessages: {
     type: Number,
     default: 0
+  },
+  toAdminUnread: {
+    type: Number,
+    default: 0
+  },
+  toClientUnread: {
+    type: Number,
+    default: 0
   }
 })
 

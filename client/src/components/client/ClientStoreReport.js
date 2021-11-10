@@ -1,13 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getClientOrders } from '../../actions/admin'
+import { messagesRead } from '../../actions/message'
 import { deleteNotification } from '../../actions/client'
 import Chart from 'react-apexcharts'
 import { getTotalSales, getClientChartOptions, getClientChartSeries } from '../../utils/clientCharts'
 import { formatDateAndTimeInPDT, formatDate } from '../../utils/formatDate1'
 import { totalNetProfit, totalNetProfitChange, totalGrossProfit, totalGrossProfitChange, totalSales, totalSalesChange, getTrendingItem, getMostSoldItem } from '../../utils/storeStatistics'
+import { useHistory } from 'react-router'
 
-const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, notifications, deleteNotification }) => {
+const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, notifications, deleteNotification, clientUnreadMessages, messagesRead }) => {
+  const history = useHistory()
+
   React.useEffect(() => {
     getClientOrders(clientID)
   }, [getClientOrders, clientID])
@@ -78,6 +82,20 @@ const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, notificati
                   </div>
                 </li>
               )}
+              {clientUnreadMessages > 0 ?
+                <li className='notification-item p-1 mb-1' onClick={() => {
+                  messagesRead(clientID)
+                  history.push('/messages')
+                }}>
+                  <div className='d-flex justify-content-between align-items-center'>
+                    <div className='text-justify'>There are {clientUnreadMessages} new message(s).</div>
+                    <div><button onClick={e => {
+                      e.stopPropagation()
+                      messagesRead(clientID)
+                    }} className='btn btn-sm'><i className='fa fa-remove'></i></button></div>
+                  </div>
+                </li>
+                : null}
             </ul>
           </div>
         </div>
@@ -249,7 +267,8 @@ const ClientStoreReport = ({ getClientOrders, clientID, clientOrders, notificati
 const mapStateToProps = state => ({
   clientID: state.auth.user._id,
   clientOrders: state.admin.adminClientOrders,
-  notifications: state.client.notifications
+  notifications: state.client.notifications,
+  clientUnreadMessages: state.message.clientUnreadMessages
 })
 
-export default connect(mapStateToProps, { getClientOrders, deleteNotification })(ClientStoreReport)
+export default connect(mapStateToProps, { getClientOrders, deleteNotification, messagesRead })(ClientStoreReport)

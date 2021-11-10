@@ -1,6 +1,8 @@
 import api from '../utils/api'
 // import { setAlert } from './alert'
 import {
+  ADMIN_UNREAD_MESSAGES_LOADED,
+  CLIENT_UNREAD_MESSAGES_LOADED,
   MESSAGES_LOADED,
 } from './types'
 
@@ -44,5 +46,39 @@ export const getAdminMessageNumbers = async (clientID) => {
 
   if (res.data.success) {
     return res.data.adminMessageNumbers
+  }
+}
+
+export const messagesRead = (clientID, seen = 'client') => async dispatch => {
+  const res = await api.get(`/message/messagesRead/?clientID=${clientID}&seen=${seen}`)
+
+  if (res.data.success) {
+    if (seen === 'admin') {
+      dispatch(getAdminUnreadMessages())
+    } else {
+      dispatch(getClientUnreadMessages(clientID))
+    }
+  }
+}
+
+export const getAdminUnreadMessages = () => async dispatch => {
+  const res = await api.get('/message/getAdminUnreadMessages')
+
+  if (res.data.success) {
+    dispatch({
+      type: ADMIN_UNREAD_MESSAGES_LOADED,
+      payload: res.data.adminUnreadMessages
+    })
+  }
+}
+
+export const getClientUnreadMessages = (clientID) => async dispatch => {
+  const res = await api.get(`/message/getClientUnreadMessages/${clientID}`)
+
+  if (res.data.success) {
+    dispatch({
+      type: CLIENT_UNREAD_MESSAGES_LOADED,
+      payload: res.data.clientUnreadMessages
+    })
   }
 }

@@ -10,12 +10,12 @@ import ClientHeader from './ClientHeader'
 import ClientStoreReport from './ClientStoreReport'
 import ClientEducation from './ClientEducation'
 import ClientMessages from './ClientMessages'
-import { getAdminMessageNumbers, getMessages } from '../../actions/message'
+import { getAdminMessageNumbers, getMessages, getClientUnreadMessages } from '../../actions/message'
 import { setAlert } from '../../actions/alert'
 
 var firstIntervalID = -1
 
-const Client = ({ setAlert, clientID, getMessages }) => {
+const Client = ({ setAlert, clientID, getMessages, getClientUnreadMessages }) => {
   React.useEffect(() => {
     var intervalID = setInterval(async function () {
       let messageNumbersFromDB = await getAdminMessageNumbers(clientID)
@@ -31,8 +31,10 @@ const Client = ({ setAlert, clientID, getMessages }) => {
       } else if (messageNumbersFromDB.messageNumber > messageNumbersFromLocalStorage.messageNumber) {
         setAlert(`There are ${messageNumbersFromDB.messageNumber - messageNumbersFromLocalStorage.messageNumber} new messages from Admin`, 'success')
         getMessages(clientID)
+        getClientUnreadMessages(clientID)
       } else if (messageNumbersFromDB.messageNumber < messageNumbersFromLocalStorage.messageNumber) {
         getMessages(clientID)
+        getClientUnreadMessages(clientID)
       }
 
       localStorage.setItem('adminMessageNumbers', JSON.stringify(messageNumbersFromDB))
@@ -43,7 +45,7 @@ const Client = ({ setAlert, clientID, getMessages }) => {
     } else {
       clearInterval(intervalID)
     }
-  }, [getMessages, setAlert, clientID])
+  }, [getMessages, setAlert, getClientUnreadMessages, clientID])
 
   return (
     <div className='container-fluid bg-Client bg-admin'>
@@ -69,4 +71,4 @@ const mapStateToProps = state => ({
   clientID: state.auth.user._id
 })
 
-export default connect(mapStateToProps, { setAlert, getMessages })(Client)
+export default connect(mapStateToProps, { setAlert, getMessages, getClientUnreadMessages })(Client)

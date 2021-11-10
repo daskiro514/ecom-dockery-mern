@@ -14,7 +14,7 @@ import AdminEducationCreate from './AdminEducationCreate'
 import AdminEducationEdit from './AdminEducationEdit'
 import AdminMessages from './admin-messages/AdminMessages'
 import AdminClientMessages from './admin-messages/AdminClientMessages'
-import { getClientsMessageNumbers, getMessages } from '../../actions/message'
+import { getClientsMessageNumbers, getMessages, getAdminUnreadMessages } from '../../actions/message'
 import { setAlert } from '../../actions/alert'
 
 const checkArraysSame = (array1, array2) => {
@@ -26,7 +26,7 @@ const checkArraysSame = (array1, array2) => {
 
 var firstIntervalID = -1
 
-const Admin = ({ setAlert, getMessages }) => {
+const Admin = ({ setAlert, getMessages, getAdminUnreadMessages }) => {
   React.useEffect(() => {
     var intervalID = setInterval(async function () {
       let messageNumbersFromDB = await getClientsMessageNumbers()
@@ -52,6 +52,7 @@ const Admin = ({ setAlert, getMessages }) => {
 
           if (element.clientID === clientIDForChat) {
             getMessages(element.clientID)
+            getAdminUnreadMessages()
           }
         })
 
@@ -64,7 +65,7 @@ const Admin = ({ setAlert, getMessages }) => {
     } else {
       clearInterval(intervalID)
     }
-  }, [getMessages, setAlert])
+  }, [getMessages, setAlert, getAdminUnreadMessages])
 
   return (
     <div className='container-fluid bg-admin'>
@@ -94,4 +95,4 @@ const mapStateToProps = state => ({
 
 })
 
-export default connect(mapStateToProps, { setAlert, getMessages })(Admin)
+export default connect(mapStateToProps, { setAlert, getMessages, getAdminUnreadMessages })(Admin)
