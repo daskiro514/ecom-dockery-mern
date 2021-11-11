@@ -49,7 +49,7 @@ const ClientHeader = ({ getNotifications, notifications, clientID, getClientUnre
         :
         <i className='fa fa-bell ml-2 cursor-pointer'></i>
       }
-      <i onClick={() => history.push('/dashboard/message')} className='fa fa-question-circle ml-2 cursor-pointer'></i>
+      <i onClick={() => history.push('/dashboard/messages')} className='fa fa-question-circle ml-2 cursor-pointer'></i>
     </div>
   )
 }

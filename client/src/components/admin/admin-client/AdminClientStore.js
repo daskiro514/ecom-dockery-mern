@@ -220,7 +220,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
         </div>
         <div className='col-lg-3'>
           <div className='p-3 bg-white rounded-lg mt-3'>
-            <div className='d-flex justify-content-center align-items-center'>
+            <div className='d-flex align-items-center'>
               <div className='border border-4 border-light-green rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
@@ -231,7 +231,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
             </div>
           </div>
           <div className='p-3 bg-white rounded-lg mt-3'>
-            <div className='d-flex justify-content-center align-items-center'>
+            <div className='d-flex align-items-center'>
               <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
@@ -250,7 +250,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
         </div>
         <div className='col-lg-3'>
           <div className='p-3 bg-white rounded-lg mt-3'>
-            <div className='d-flex justify-content-center align-items-center'>
+            <div className='d-flex align-items-center'>
               <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
@@ -265,7 +265,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
             </div>
           </div>
           <div className='p-3 bg-white rounded-lg mt-3'>
-            <div className='d-flex justify-content-center align-items-center'>
+            <div className='d-flex align-items-center'>
               <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-shopping-cart' style={{ fontSize: '45px' }}></i>
               </div>
@@ -284,7 +284,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
         </div>
         <div className='col-lg-3'>
           <div className='p-3 bg-white rounded-lg mt-3'>
-            <div className='d-flex justify-content-center align-items-center'>
+            <div className='d-flex align-items-center'>
               <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
               </div>
@@ -299,7 +299,7 @@ const AdminClientStore = ({ clientID, getClientOrders, storeClientOrders, client
             </div>
           </div>
           <div className='p-3 bg-white rounded-lg mt-3'>
-            <div className='d-flex justify-content-center align-items-center'>
+            <div className='d-flex align-items-center'>
               <div className='border rounded-circle text-center mr-2 p-2'>
                 <i className='fa fa-bullhorn' style={{ fontSize: '45px' }}></i>
               </div>
