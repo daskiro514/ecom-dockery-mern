@@ -11,13 +11,26 @@ const AdminMessagesSidebar = ({ getAdminClients, clients, goPage, setChatClient,
     getAdminClients()
   }, [getAdminClients])
 
+  const [searchKey, setSearchKey] = React.useState('')
+  const [showClients, setShowClients] = React.useState([])
+
+  React.useEffect(() => {
+    setShowClients(clients.filter(client => client.firstName.toLowerCase().includes(searchKey.toLowerCase()) || client.lastName.toLowerCase().includes(searchKey.toLowerCase())))
+  }, [clients, searchKey])
+
   return (
     <div className='bg-white m-1 mb-4 rounded-lg'>
       <div className='p-2'>
         <div className='h-auto border rounded-lg'>
           <span>
             <i className='fa fa-search mx-2'></i>
-            <input placeholder='Search' className='border border-0' style={{ outline: 'none', width: '70%' }} />
+            <input
+              placeholder='Search'
+              className='border border-0'
+              style={{ outline: 'none', width: '70%' }}
+              value={searchKey}
+              onChange={e => setSearchKey(e.target.value)}
+            />
           </span>
         </div>
       </div>
@@ -25,7 +38,7 @@ const AdminMessagesSidebar = ({ getAdminClients, clients, goPage, setChatClient,
         Client List
       </div>
       <div className='p-2'>
-        {clients.map((item, index) =>
+        {showClients.map((item, index) =>
           <div key={index} onClick={() => {
             goPage(history, `messages/${item._id}`)
             setChatClient(item._id)

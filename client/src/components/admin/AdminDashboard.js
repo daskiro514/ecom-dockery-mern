@@ -13,6 +13,13 @@ const AdminDashboard = ({ getAdminClients, clients, goPage }) => {
     getAdminClients()
   }, [getAdminClients])
 
+  const [searchKey, setSearchKey] = React.useState('')
+  const [showClients, setShowClients] = React.useState([])
+
+  React.useEffect(() => {
+    setShowClients(clients.filter(client => client.firstName.toLowerCase().includes(searchKey.toLowerCase()) || client.lastName.toLowerCase().includes(searchKey.toLowerCase())))
+  }, [clients, searchKey])
+
   return (
     <div className='admin-dashboard'>
       <div className='h4 pt-2 pl-1'>
@@ -25,7 +32,13 @@ const AdminDashboard = ({ getAdminClients, clients, goPage }) => {
               <div className='h-auto border rounded-lg'>
                 <span>
                   <i className='fa fa-search mx-2'></i>
-                  <input placeholder='Search' className='border border-0' style={{ outline: 'none', width: '70%' }} />
+                  <input
+                    placeholder='Search'
+                    className='border border-0'
+                    style={{ outline: 'none', width: '70%' }}
+                    value={searchKey}
+                    onChange={e => setSearchKey(e.target.value)}
+                  />
                 </span>
               </div>
             </div>
@@ -33,7 +46,7 @@ const AdminDashboard = ({ getAdminClients, clients, goPage }) => {
               Client List
             </div>
             <div className='p-2'>
-              {clients.map((item, index) =>
+              {showClients.map((item, index) =>
                 <div key={index} onClick={() => goPage(history, `client/${item._id}`)} className='d-flex align-items-center p-1 rounded mb-1 link-item'>
                   <img src={item.avatar} alt='userAvatar' className='rounded-circle mr-2' width='40px' />
                   <div style={{ lineHeight: '1' }}>
